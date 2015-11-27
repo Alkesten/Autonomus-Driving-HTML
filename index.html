@@ -25,20 +25,22 @@
 			</div>
 			<button class='button-manual' type='button' id='down'>↓</button>
 		</div>
-
 		<div class='center tab-content' id='instruction'>
-			<ul>
-				<li class="draggable" class="left ui-state-highlight"><p>Turn Left</p></li>
-				<li class="draggable" class="left ui-state-highlight"><p>Turn Right</p></li>
-				<li class="draggable" class="left ui-state-highlight"><p>Stop</p></li>
-				<li class="draggable" class="left ui-state-highlight"><p>Park</p></li>
-			</ul>
- 
-			<ul class="sortable">
+			<h1 style= 'font-family: Open Sans, sans-serif'>Instruction Queu </h1>
+			<button class='button' style='width: 300px;height: 50px;border: solid;
+				background-color: white;' id='forward'>Forward</button></br>
+			<button class='button' style='width: 300px;height: 50px;border: solid;
+				background-color: white;' id='turn_left'>Turn Left</button></br>
+			<button class='button' style='width: 300px;height: 50px;border: solid;
+				background-color: white;' id='turn_right'>Turn Right</button></br>
+			<button class='button' style='width: 300px;height: 50px;border: solid;
+				background-color: white;' id='park'>Park</button></br>
 				
-			</ul>
+			<div class='queu-buttons' style='display: inline'>
+				<input type='button' class='queu-buttons' style='float: left; width: 50px' name='add' value='+' onclick='startQueu()'/>
+				<input type='button' class='queu-buttons' style='float: left; width: 50px' name='start' value='&#9658' onclick='startQueu()'()"/>
+			</div>	
 		</div>
-
 		<div class='center tab-content' id='output'>
 
 		<!-- 

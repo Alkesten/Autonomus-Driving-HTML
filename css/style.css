@@ -60,6 +60,23 @@ Manual Style
 			font-size: 22px;
 			background-color: rgba(0, 101, 189, .5);
 		}
+		
+		.button_auto {
+			width: 300px;
+			height: 50px;
+			border: solid;	
+			margin:	5px;
+			font-size: 22px;
+			background-color: white;
+		}
+		
+		.queu-buttons {
+			width: 50px;
+			height: 50px;	
+			margin:	5px;
+			font-size: 16px;
+			background-color: white;
+		}
 
 		.button-manual.active {
 			background-color: rgba(0, 101, 189, 1);
@@ -70,6 +87,14 @@ Manual Style
 			left: 50%;
 			margin-left: -50px;
 			top: 50%;
+			margin-top: -175px;
+		}
+		
+		.center_instructions {
+			position: absolute;
+			left: 50%;
+			margin-left: -155px;
+			top: 40%;
 			margin-top: -175px;
 		}
 	
