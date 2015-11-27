@@ -27,7 +27,11 @@ var main = function() {
 	})
 
 	$( "ul.sortable" ).sortable({
-		group: 'sortable'
+		group: 'sortable',
+		onDrop: function  ($item, container, _super) {
+			$('<button class="right button-instruction">x</button>').appendTo($item);
+			$item.addClass(test);
+		}
 	});
 
 	$( ".draggable" ).draggable({

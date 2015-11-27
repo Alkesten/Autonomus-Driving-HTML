@@ -8,6 +8,9 @@ Generic Style
 			background-color: white;
 		}	
 
+		.left {	float: left; }
+		.right { float: right; }
+
 /*********************************************************************************
 Navigation/Tab Style
 *********************************************************************************/
@@ -91,3 +94,11 @@ Instruction Style
 		.draggable, .draggable p { background: rgba(0, 101, 189, 1); color: white; }
 
 		.sortable { background: #F8F8F8; min-height: 40px; }
+
+		.button-instruction { background: none; border: none; }
+
+/*********************************************************************************
+Test
+*********************************************************************************/
+
+		.test{ background: yellow; }
