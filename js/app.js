@@ -2,8 +2,8 @@ var main = function() {
 	var active = false;
 	var lastClicked = '';
 
-	$('.button-manual').click(function(){
-		$('.button-manual').removeClass('active');
+	$('.manual-button').click(function(){
+		$('.manual-button').removeClass('active');
 
 		if(active==true && lastClicked==$(this).attr('id')) {
 			active=false;

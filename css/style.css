@@ -1,6 +1,6 @@
 
 /*********************************************************************************
-Generic Style
+Generic Styles
 *********************************************************************************/
 
 		* {
@@ -10,6 +10,27 @@ Generic Style
 
 		.left {	float: left; }
 		.right { float: right; }
+
+				.blue-button:focus {
+			outline: none;
+		}
+
+		.blue-button {
+			margin: 10px;
+			border: none;
+			font-size: 18px;	
+			background-color: rgba(0, 101, 189, .75);
+			border-bottom: 6px solid rgba(0, 101, 189, 1);
+			text-shadow: 0px -2px #2980B9;
+			border-radius: 10px;
+			color: white;
+		}
+
+		.blue-button:active {
+			transform: translate(0px,5px);
+  			-webkit-transform: translate(0px,5px);
+			border-bottom: 1px solid;
+		} 
 
 /*********************************************************************************
 Navigation/Tab Style
@@ -48,29 +69,46 @@ Navigation/Tab Style
 Manual Style
 *********************************************************************************/
 
-		.button-manual:focus {
-			outline: none;
+		.center-manual {
+			position: absolute;
+			left: 50%;
+			margin-left: -50px;
+			top: 50%;
+			margin-top: -150px;
 		}
 
-		.button-manual {
-			width: 75px;
-			height: 75px;
-			border: none;	
-			margin: 10px;
-			font-size: 22px;
-			background-color: rgba(0, 101, 189, .5);
+		.left-right { margin-left: 75px; }
+	
+		.middle { margin-left: -147px; }
+
+		.manual-button { width: 75px; height: 75px; }
+
+		.manual-button.active {
+			transform: translate(0px,5px);
+  			-webkit-transform: translate(0px,5px);
+			border-bottom: 1px solid;
+		} 
+
+/*********************************************************************************
+Instruction Style - Oliver
+*********************************************************************************/
+
+		.center-instruction {
+			position: absolute;
+			left: 50%;
+			margin-left: -155px;
+			top: 40%;
+			margin-top: -175px;
+			text-align: center;
 		}
-		
-		.button_auto {
+
+
+		.instruction-button { 
 			width: 300px;
 			height: 50px;
-			border: solid;	
-			margin:	5px;
-			font-size: 22px;
-			background-color: white;
 		}
-		
-		.queu-buttons {
+
+		.queue-button {
 			width: 50px;
 			height: 50px;	
 			margin:	5px;
@@ -78,36 +116,8 @@ Manual Style
 			background-color: white;
 		}
 
-		.button-manual.active {
-			background-color: rgba(0, 101, 189, 1);
-		}
-
-		.center-manual {
-			position: absolute;
-			left: 50%;
-			margin-left: -50px;
-			top: 50%;
-			margin-top: -175px;
-		}
-		
-		.center_instructions {
-			position: absolute;
-			left: 50%;
-			margin-left: -155px;
-			top: 40%;
-			margin-top: -175px;
-		}
-	
-		.middle {
-			margin-left: -147px;
-		}
-
-		.left-right {
-			margin-left: 75px;
-		}
-
 /*********************************************************************************
-Instruction Style
+Instruction Style - Kirsten
 *********************************************************************************/
 
 		#instruction ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
@@ -123,7 +133,7 @@ Instruction Style
 		.button-instruction { background: none; border: none; }
 
 /*********************************************************************************
-Test
+Test - Kirsten
 *********************************************************************************/
 
 		.test{ background: yellow; }

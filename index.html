@@ -18,28 +18,21 @@
 		</ul>
 
 		<div class='center-manual tab-content active' id='manual'>
-			<button class='button-manual' id='up'>↑</button></br>
+			<button class='blue-button manual-button' id='up'>↑</button></br>
 			<div class='middle'>
-				<button class='button-manual left-right' id='left'>←</button>
-				<button class='button-manual left-right' id='right'>→</button></br>
+				<button class='blue-button manual-button left-right' id='left'>←</button>
+				<button class='blue-button manual-button left-right' id='right'>→</button></br>
 			</div>
-			<button class='button-manual' type='button' id='down'>↓</button>
+			<button class='blue-button manual-button' type='button' id='down'>↓</button>
 		</div>
-		<div class='center tab-content' id='instruction'>
-			<h1 style= 'font-family: Open Sans, sans-serif'>Instruction Queu </h1>
-			<button class='button' style='width: 300px;height: 50px;border: solid;
-				background-color: white;' id='forward'>Forward</button></br>
-			<button class='button' style='width: 300px;height: 50px;border: solid;
-				background-color: white;' id='turn_left'>Turn Left</button></br>
-			<button class='button' style='width: 300px;height: 50px;border: solid;
-				background-color: white;' id='turn_right'>Turn Right</button></br>
-			<button class='button' style='width: 300px;height: 50px;border: solid;
-				background-color: white;' id='park'>Park</button></br>
+		<div class='center-instruction tab-content' id='instruction'>
+			<button class='instruction-button blue-button' id='left'>Turn Left</button></br>
+			<button class='instruction-button blue-button' id='right'>Turn Right</button></br>
+			<button class='instruction-button blue-button' id='park'>Park</button></br>
 				
-			<div class='queu-buttons' style='display: inline'>
-				<input type='button' class='queu-buttons' style='float: left; width: 50px' name='add' value='+' onclick='startQueu()'/>
-				<input type='button' class='queu-buttons' style='float: left; width: 50px' name='start' value='&#9658' onclick='startQueu()'()"/>
-			</div>	
+			<input type='button' class='queue-button' name='add' value='+' onclick='startQueu()'/>
+			<input type='button' class='queue-button' name='start' value='&#9658' onclick='startQueu()'()"/>
+				
 		</div>
 		<div class='center tab-content' id='output'>
 
