@@ -1,0 +1,79 @@
+
+/*********************************************************************************
+Generic Style
+*********************************************************************************/
+
+		* {
+			font-family: 'Open Sans', sans-serif;
+			background-color: white;
+		}	
+
+/*********************************************************************************
+Navigation/Tab Style
+*********************************************************************************/
+
+		ul.tabs {
+			list-style:none;
+			margin:0;
+			padding:0;
+			text-align:center;
+		}
+
+		ul.tabs li {
+			color: #1C1C1C;
+			display: inline-block;
+			text-decoration: none;
+			margin: -3px;
+			width: 33.33%;
+			padding: 35px 0px 15px 0px;
+			cursor: pointer;
+		}
+
+		ul.tabs li.active {
+			border-bottom: 3px solid rgba(0, 101, 189, 1);
+		}
+
+		.tab-content{
+			display: none;
+		}
+
+		.tab-content.active{
+			display: inherit;
+		}
+
+/*********************************************************************************
+Button Style
+*********************************************************************************/
+
+		.button:focus {
+			outline: none;
+		}
+
+		.button {
+			width: 75px;
+			height: 75px;
+			border: none;	
+			margin: 10px;
+			font-size: 22px;
+			background-color: rgba(0, 101, 189, .5);
+		}
+
+		.button.active {
+			background-color: rgba(0, 101, 189, 1);
+		}
+
+		.center {
+			position: absolute;
+			left: 50%;
+			margin-left: -50px;
+			top: 50%;
+			margin-top: -175px;
+		}
+	
+		.middle {
+			margin-left: -147px;
+		}
+
+		.left-right {
+			margin-left: 75px;
+		}
