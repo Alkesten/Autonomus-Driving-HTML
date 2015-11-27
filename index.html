@@ -2,8 +2,11 @@
     <html>
         <head>
             	<meta charset='utf-8'> 
-            	<meta name='viewport' content='width=device-width, initial-scale=1'> 
+            	<meta name='viewport' content='width=device-width, initial-scale=1'>
 		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 		<link href='css/normalize.css' rel='stylesheet' type='text/css'>
 		<link href='css/style.css' rel='stylesheet' type='text/css'>
         </head>
@@ -14,23 +17,27 @@
 			<li class="tab" data-tab="output">Output</li>
 		</ul>
 
-		<div class='center tab-content active' id='manual'>
-			<button class='button' id='up'>↑</button></br>
+		<div class='center-manual tab-content active' id='manual'>
+			<button class='button-manual' id='up'>↑</button></br>
 			<div class='middle'>
-				<button class='button left-right' id='left'>←</button>
-				<button class='button left-right' id='right'>→</button></br>
+				<button class='button-manual left-right' id='left'>←</button>
+				<button class='button-manual left-right' id='right'>→</button></br>
 			</div>
-			<button class='button' type='button' id='down'>↓</button>
+			<button class='button-manual' type='button' id='down'>↓</button>
 		</div>
 
 		<div class='center tab-content' id='instruction'>
+			<ul>
+				<li class="draggable" class="left ui-state-highlight"><p>Turn Left</p><button class="right">x</button></li>
+				<li class="draggable" class="left ui-state-highlight"><p>Turn Right</p></li>
+				<li class="draggable" class="left ui-state-highlight"><p>Stop</p></li>
+				<li class="draggable" class="left ui-state-highlight"><p>Park</p></li>
 
-		<!-- 
-
-		Instruction Code Here 
-
-		-->
-
+			</ul>
+ 
+			<ul class="sortable">
+				
+			</ul>
 		</div>
 
 		<div class='center tab-content' id='output'>
@@ -43,8 +50,6 @@
 
 		</div>
 
-		<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js'></script>
 		<script src='js/app.js'></script>
-
         </body>
 </html>

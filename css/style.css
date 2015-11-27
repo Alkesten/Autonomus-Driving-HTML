@@ -42,14 +42,14 @@ Navigation/Tab Style
 		}
 
 /*********************************************************************************
-Button Style
+Manual Style
 *********************************************************************************/
 
-		.button:focus {
+		.button-manual:focus {
 			outline: none;
 		}
 
-		.button {
+		.button-manual {
 			width: 75px;
 			height: 75px;
 			border: none;	
@@ -58,11 +58,11 @@ Button Style
 			background-color: rgba(0, 101, 189, .5);
 		}
 
-		.button.active {
+		.button-manual.active {
 			background-color: rgba(0, 101, 189, 1);
 		}
 
-		.center {
+		.center-manual {
 			position: absolute;
 			left: 50%;
 			margin-left: -50px;
@@ -77,3 +77,17 @@ Button Style
 		.left-right {
 			margin-left: 75px;
 		}
+
+/*********************************************************************************
+Instruction Style
+*********************************************************************************/
+
+		#instruction ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
+
+		#instruction li { margin: 5px; padding: 5px; width: 50%;}
+
+		#instruction li p { display: inline; }
+			
+		.draggable, .draggable p { background: rgba(0, 101, 189, 1); color: white; }
+
+		.sortable { background: #F8F8F8; min-height: 40px; }

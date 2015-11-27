@@ -2,8 +2,8 @@ var main = function() {
 	var active = false;
 	var lastClicked = '';
 
-	$('.button').click(function(){
-		$('.button').removeClass('active');
+	$('.button-manual').click(function(){
+		$('.button-manual').removeClass('active');
 
 		if(active==true && lastClicked==$(this).attr('id')) {
 			active=false;
@@ -25,6 +25,20 @@ var main = function() {
 		$(this).addClass('active');
 		$("#"+tabId).addClass('active');
 	})
+
+	$( "ul.sortable" ).sortable({
+		group: 'sortable'
+	});
+
+	$( ".draggable" ).draggable({
+		connectToSortable: ".sortable",
+		helper: "clone",
+		greedy: 'true',
+		revert: "invalid"
+
+	});
+
+	$( "ul, li" ).disableSelection();
 };
 
 $(document).ready(main);
