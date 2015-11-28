@@ -3,10 +3,13 @@
         <head>
             	<meta charset='utf-8'> 
             	<meta name='viewport' content='width=device-width, initial-scale=1'>
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+		<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link href='https://fonts.googleapis.com/css?family=Raleway:500' rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+		<link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css' rel='stylesheet' type='text/css'>
 		<link href='css/normalize.css' rel='stylesheet' type='text/css'>
 		<link href='css/style.css' rel='stylesheet' type='text/css'>
         </head>
@@ -25,14 +28,39 @@
 			</div>
 			<button class='blue-button manual-button' type='button' id='down'>↓</button>
 		</div>
-		<div class='center-instruction tab-content' id='instruction'>
+		<div class='tab-content' id='instruction'>
+			<!--
 			<button class='instruction-button blue-button' id='left'>Turn Left</button></br>
 			<button class='instruction-button blue-button' id='right'>Turn Right</button></br>
 			<button class='instruction-button blue-button' id='park'>Park</button></br>
 				
 			<input type='button' class='queue-button' name='add' value='+' onclick='startQueu()'/>
 			<input type='button' class='queue-button' name='start' value='&#9658' onclick='startQueu()'()"/>
+			-->
+
+			<button class='execute center-instruction-buttons'><i class="fa fa-play"></i></button>
+			<button class='brake center-instruction-buttons'><i class="fa fa-stop"></i></button>
+
+			<div class='queue-container'>
+				<span class='queue-header'>
+					<h2>Queue</h2>
+					<button class='queue-add'>+</button>
+				</span>
 				
+				<div class='queue-options'>
+					<ul>
+						<li class='add-instruction'><a>Forward</a></li>
+						<li class='add-instruction'><a>Backward</a></li>
+						<li class='add-instruction'><a>Turn Left</a></li>
+						<li class='add-instruction'><a>Turn Right</a></li>
+						<li class='add-instruction'><a>Park</a></li>
+						<li class='add-instruction'><a>Stop</a></li>
+					</ul>	
+				</div>
+			
+				<ul class='queue'>
+				</ul>
+			</div>	
 		</div>
 		<div class='center tab-content' id='output'>
 
