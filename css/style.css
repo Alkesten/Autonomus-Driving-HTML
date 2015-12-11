@@ -11,7 +11,7 @@ Generic Styles
 		.left {	float: left; }
 		.right { float: right; }
 
-				.blue-button:focus {
+		.blue-button:focus {
 			outline: none;
 		}
 
@@ -284,3 +284,24 @@ ul {
 .brake:focus { outline: none; }
 
 .brake:active {  border-bottom: none; }
+
+/*********************************************************************************
+Output Style - Moritz
+*********************************************************************************/
+
+.stop {
+	background-color: #E71A1D !important;
+}
+
+.button-long {
+	width: 100%;
+	border: none;
+	margin: 10px;
+	font-size: 22px;
+	background-color: rgba(0, 101, 189, .5);
+}
+
+.long{
+	width: 100%;
+	margin: 10px;
+}
