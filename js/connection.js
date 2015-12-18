@@ -13,3 +13,53 @@ var main = function() {
 function transmit(buffer){
 	server.send(buffer, offset, length, RPORT, address)
 }
+
+/**
+* @param {number} speed - range between 0 and 100
+* @param {number} direction - range between 0 and 100 where is 0-49 left and 51-100 right, 50 is straight
+*/
+function setSpeed(speed, direction){	
+	for(i=0; arguments.length; i++){
+		//check for empty parameter
+		if(arguements[i] === undefinded){
+			return;
+		}
+		//check for right type
+		if(typeof arguements[i] === 'number'){
+		//check for range
+			if(arguements[i] < 0){
+				return;
+			}
+			if(arguements[i] > 100){
+				return;
+			}
+		} else {
+			return;
+		}
+	}
+
+	var id = 0x15; //21
+	var a = [];
+	
+	a[0] = id;
+	a[1] = speed.toString(16);
+	a[2] = direction.toString(16);
+	
+	var buffer = new Buffer(a);
+	
+	transmit(buffer);
+}
+
+function setStop(){
+	var id = 0x16; //22
+	var a = [];	
+	a[0] = id;
+	
+	var buffer = new Buffer(a);
+	
+	transmit(buffer);
+}
+
+function parking(){
+ //TODO
+}
