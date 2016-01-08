@@ -9,6 +9,7 @@ var LPORT = 33333; //local port of the app
 var RPORT = 33334; //remote port of the car
 var LIP = '127.0.0.1'; //local IP address of the phone/app
 var RIP = '192.168.1.10' //remote IP address of the car
+var socket;
 
 /*
  * variables to transmit
@@ -38,6 +39,7 @@ socket.on('message', onIncommingMsg(msg, rinfo));
  * @param {object} rinfo - Remote address information
  */
 function onIncommingMsg(msg, rinfo){
+	//TODO check if msg contains hex values.
 	switch(msg[0]){
 	case 11:
 		speedFL = msg[1];
@@ -101,25 +103,22 @@ function setSpeedDirection(speed, direction){
 		//check for right type
 		if(typeof arguements[i] === 'number'){
 		//check for range
-			if(arguements[i] < 0){
-				return; //out of range <0
-			}
-			if(arguements[i] > 100){
-				return; //out of range >100
+			if(arguements[i] < 0 || arguements[i] > 100){
+				throw "out of range <0 || >100";
+			} else {
+				var a = [];	
+				a[0] = id;
+				a[1] = speed.toString(16);
+				a[2] = direction.toString(16);
+				
+				var buffer = new Buffer(a);
+				
+				transmit(buffer);
 			}
 		} else {
-			return; //not typeof number
+			throw "not all arguments are type of number";
 		}
 	}
-
-	var a = [];	
-	a[0] = id;
-	a[1] = speed.toString(16);
-	a[2] = direction.toString(16);
-	
-	var buffer = new Buffer(a);
-	
-	transmit(buffer);
 }
 
 /**
@@ -152,20 +151,20 @@ function setPark(){
 
 /**
  * fills the tour instruction array.
- * @param {number} direction - range between 0 and 2: 0 = turn left, 1 = go straight, 2 = turn right
+ * @param {number} cmd - range between 0 and 2: 0 = turn left, 1 = go straight, 2 = turn right, 3 = park, 4 = stop
  */
-function buildInstruction(direction){
-	if(direction === undefinded){
+function buildInstruction(cmd){
+	if(cmd === undefinded){
 		throw "Argument is empty!";
 	}
-	if(typeof direction === 'number'){
-		if(direction === 0 || direction === 1 || direction === 2){
-			instruction.push(direction); //adds direction at the end of the instruction array
+	if(typeof cmd === 'number'){
+		if(cmd === 0 || cmd === 1 || cmd === 2 || cmd === 3 || cmd === 4){
+			instruction.push(cmd.toString(16)); //adds direction at the end of the instruction array
 		} else {
-			throw "@param 'direction' is out of range! Range has to be between 0 and 2: 0 = turn left, 1 = go straight, 2 = turn right.";
+			throw "@param 'cmd' is out of range! Range has to be between 0 and 2: 0 = turn left, 1 = go straight, 2 = turn right, 3 = park, 4 = stop.";
 		}
 	} else {
-		throw "@param 'direction' has to be type of 'number'";
+		throw "@param 'cmd' has to be type of 'number'";
 	}
 }
 
@@ -175,9 +174,9 @@ function buildInstruction(direction){
 function setTour(){
 	var id = 0x18; //id for instruction: 24
 
-	var prefix = [];	
+	var prefix = [];
 	prefix[0] = id;
-	prefix[1] = instruction.length();
+	prefix[1] = instruction.length.toString(16);
 	var a = prefix.concat(instruction); //concatinates prefix array (id and length) and instructions array
 	
 	var buffer = new Buffer(a);
