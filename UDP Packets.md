@@ -2,7 +2,7 @@
 
 ## UDP Packet
 The header has 8 octets (bytes = B) = 2 * (2 * 8) bit. source port (2 B) + destination port (2 B) + length (2 B) + checksum (2 B)
-The UDP payload has to be filled up until octets are completed.
+The UDP payload has to be filled up until octets are completed. All hex values are presented in big endian.
 
 
 ## Commands
@@ -11,15 +11,15 @@ The payload has to start with the specific id of the type of command. The id (bi
 ### Receive
 * speed 
 	* id: 11 (0000 1011)
-	* values: 4 char
+	* values: 5 char: id + front left + front right + back left + back right
 
 * gyroscope
 	* id: 12 (0000 1100)
-	* values: 3 char
+	* values: 4 char: id + x + y + z
 
 * distance
 	* id: 13 (0000 1101)
-	* values: 8 unsigned char
+	* values: 9 unsigned char: id + d1 + d2 + d3 + d4 + d5 + d6 + d7 + d8
 
 * video *(deprecated)*
 	* id: 14 (0000 1110)

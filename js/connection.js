@@ -2,17 +2,68 @@
  * @author Moritz Kellermann
  */
 
-//TODO IP and port should be dynamic
+/*
+ * connection configuration variables
+ */
 var LPORT = 33333; //local port of the app
 var RPORT = 33334; //remote port of the car
 var LIP = '127.0.0.1'; //local IP address of the phone/app
 var RIP = '192.168.1.10' //remote IP address of the car
-var intruction = [] //array of tour instructions
+
+/*
+ * variables to transmit
+ */
+var instruction = [] //array of tour instructions
+
+/*
+ * reveived variables
+ */
+var speedFL, speedFR, speedBL, speedBR; //speed front and back - left and right
+var gx, gy, gz; //gyroscope x,y,z;
+var d1,d2,d3,d4,d5,d6,d7,d8; //distance sensors 1-8
+
 
 var main = function() {
 	var dgram = require("dgram");
-	server = dgram.createSocket('udp4');
-	server.bind(LPORT); //binds local socket to listener port 'LPORT'
+	socket = dgram.createSocket('udp4');
+	socket.bind(LPORT); //binds local socket to listener port 'LPORT'
+}
+
+//calls onIncommingMsg() on incomming message on the socket 
+socket.on('message', onIncommingMsg(msg, rinfo));
+
+/**
+ * checks the id of the received packet and calls the right function.
+ * @param {buffer object} msg - received UDP payload
+ * @param {object} rinfo - Remote address information
+ */
+function onIncommingMsg(msg, rinfo){
+	switch(msg[0]){
+	case 11:
+		speedFL = msg[1];
+		speedFR = msg[2];
+		speedBL = msg[3];
+		speedBR = msg[4];
+		break;
+	case 12:
+		gx = msg[1];
+		gy = msg[2];
+		gz = msg[3];
+		break;
+	case 13:
+		d1 = msg[1];
+		d2 = msg[2];
+		d3 = msg[3];
+		d4 = msg[4];
+		d5 = msg[5];
+		d6 = msg[6];
+		d7 = msg[7];
+		d8 = msg[8];
+		break;
+	default:
+		console.log("Received message with unknown id: "+ msg[0] + ", length: "+ msg.length + ", address: "+ rinfo.address + ", port: " + rinfo.port + " - Message as been dropped.");
+		break;
+	}
 }
 
 /**
@@ -109,7 +160,7 @@ function buildInstruction(direction){
 	}
 	if(typeof direction === 'number'){
 		if(direction === 0 || direction === 1 || direction === 2){
-			intruction.push(direction); //adds direction at the end of the instruction array
+			instruction.push(direction); //adds direction at the end of the instruction array
 		} else {
 			throw "@param 'direction' is out of range! Range has to be between 0 and 2: 0 = turn left, 1 = go straight, 2 = turn right.";
 		}
@@ -126,10 +177,10 @@ function setTour(){
 
 	var prefix = [];	
 	prefix[0] = id;
-	prefix[1] = intruction.length();
+	prefix[1] = instruction.length();
 	var a = prefix.concat(instruction); //concatinates prefix array (id and length) and instructions array
 	
 	var buffer = new Buffer(a);
 	
 	transmit(buffer);
-	}
+}
