@@ -30,23 +30,26 @@ The payload has to start with the specific id of the type of command. The id (bi
 ### Trasmit
 * speed and direction
 	* id: 21 (0001 0101)
-	* values: 2 char (speed and direction - nagativ and positive)
+	* values: 3 char: id + speed + direction
+		* speed: range between 0 and 100
+		* direction: range between 0 and 100: where 0-49 is left and 51-100 right, 50 is straight
 
 * stop
 	* id: 22 (0001 0110)
-	* values: 1 char
+	* values: 1 char: id
 
 * parking
 	* id: 23 (0001 0111)
-	* values: 1 char
+	* values: 1 char: id
 
 * instruction
 	* id: 24 (0001 1000)
-	* values: 1 char (for length = commands) + legth * chars (one for each direction/command)
+	* values: 2 + (length of direction array) char: id + length + array of directions
+		* directions: range between 0 and 2: 0 = turn left, 1 = go straight, 2 = turn right
 
 * request video command
 	* id: 25 (0001 1001)
-	* values: 1 char
+	* values: 1 char: id
 
 ### Video
 The video will be fetched from the car on another socket. 
