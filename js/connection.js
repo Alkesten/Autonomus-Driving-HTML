@@ -17,7 +17,7 @@ var socket;
 var instruction = [] //array of tour instructions
 
 /*
- * reveived variables
+ * received variables
  */
 var speedFL, speedFR, speedBL, speedBR; //speed front and back - left and right
 var gx, gy, gz; //gyroscope x,y,z;
@@ -25,12 +25,13 @@ var d1,d2,d3,d4,d5,d6,d7,d8; //distance sensors 1-8
 
 
 var main = function() {
+	//creates a new UDP socket
 	var dgram = require("dgram");
 	socket = dgram.createSocket('udp4');
 	socket.bind(LPORT); //binds local socket to listener port 'LPORT'
 }
 
-//calls onIncommingMsg() on incomming message on the socket 
+//calls onIncommingMsg() on incoming message on the socket 
 socket.on('message', onIncommingMsg(msg, rinfo));
 
 /**
@@ -177,7 +178,40 @@ function setTour(){
 	var prefix = [];
 	prefix[0] = id;
 	prefix[1] = instruction.length.toString(16);
-	var a = prefix.concat(instruction); //concatinates prefix array (id and length) and instructions array
+	var a = prefix.concat(instruction); //concatenates prefix array (id and length) and instructions array
+	
+	var buffer = new Buffer(a);
+	
+	transmit(buffer);
+}
+
+/**
+ * requests or stops the request of data.
+ * @param {number} speed - >0 for request speed wheel 1-4
+ * @param {number} gyroscope - >0 for request gyroscope x,y,z
+ * @param {number} distance - >0 for request distance d1-8
+ * @param {number} video - >0 for request video stream
+ */
+function requestData(speed, gyroscope, distance, video){
+	var id = 0x19; //id for request data: 25
+	var request = 0b0000;
+	
+	if(speed){
+		request = request + 0b1000;
+	}
+	if(gyroscope){
+		request = request + 0b0100;
+	}
+	if(distance){
+		request = request + 0b0010;
+	}
+	if(video){
+		request = request + 0b0001;
+	}
+	
+	var a = [];
+	a[0] = id;
+	a[1] = request.toString(16);
 	
 	var buffer = new Buffer(a);
 	

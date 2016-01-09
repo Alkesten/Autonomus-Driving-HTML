@@ -47,9 +47,15 @@ The payload has to start with the specific id of the type of command. The id (bi
 	* values: 2 + (length of direction array) char: id + length + array of directions
 		* directions: range between 0 and 2: 0 = turn left, 1 = go straight, 2 = turn right
 
-* request video command
+* request data command
 	* id: 25 (0001 1001)
-	* values: 1 char: id
+	* values: 2 char: id + requested data
+		* requestet datatypes
+			* speed (1000)
+			* gyroscope (0100)
+			* distance (0010)
+			* video (0001)
+			* <i>example: request speed and distance: 0b1000 + 0b0010 = 0b10010 = 0x0A</i>
 
 ### Video
 The video will be fetched from the car on another socket. 
