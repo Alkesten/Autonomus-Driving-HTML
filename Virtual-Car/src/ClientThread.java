@@ -1,28 +1,56 @@
 import java.io.IOException;
 import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
 
-public class ClientThread implements Runnable{
+/**
+ * 
+ * @author Moritz Kellermann
+ *
+ */
+public class ClientThread extends Thread{
 	private InetAddress appIPv4;
 	private int appPort;
+	private VirtualCar car;
+	private DatagramSocket dgramSocket;
 
-	public ClientThread(InetAddress appIPv4, int appPort) {
-		// TODO Auto-generated constructor stub
+
+	public ClientThread(InetAddress appIPv4, int appPort, VirtualCar car) {
+		this.car = car;
+		this.appIPv4 = appIPv4;
+		this.appPort = appPort;
+		
+		try {
+			dgramSocket = new DatagramSocket(this.appPort);
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+		while(true){
+			if(car.server.isDistanceRequested())
+				sendDistance();
+			if(car.server.isGyroscopeRequested())
+				sendGyroscope();
+			if(car.server.isSpeedRequested())
+				sendSpeed();
+			if(car.server.isVideoRequested())
+				sendVideo();
+			
+			try {
+				sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
-	/**
-	 * adds the id to the byte array.
-	 * @param id
-	 * @param array
-	 * @return
-	 */
-	private byte[] generatePayload(byte id, byte[] array){
+	private byte[] addId(byte id, byte[] array){
 		byte[] payload = new byte[array.length + 1];
 		payload[0] = id;
 		for(int i=0;i < array.length;i++){
@@ -30,7 +58,6 @@ public class ClientThread implements Runnable{
 		}
 		return payload;
 	}
-
 
 	/**
 	 * creates a datagram packet and sends it via the datagram socket to the app.
@@ -48,29 +75,27 @@ public class ClientThread implements Runnable{
 	
 	public void sendSpeed(){
 		byte id = 0x0B;
-		byte[] payload = generatePayload(id,speed);
+		byte[] payload = addId(id,car.getSpeed());
 		
 		sendDatagram(payload);
 	}
 	
 	public void sendGyroscope(){
 		byte id = 0x0C;
-		byte[] payload = generatePayload(id,xyz);
+		byte[] payload = addId(id,car.getGyroscop());
 
 		sendDatagram(payload);
 	}
 	
 	public void sendDistance(){
 		byte id = 0x0D;
-		byte[] payload = generatePayload(id,distance);
+		byte[] payload = addId(id,car.getDistance());
 
 		sendDatagram(payload);
 	}
 	
 	public void sendVideo(){
 		byte id = 0x0E;
-		//TODO
-		throw new UnsupportedOperationException();
+		//FIXME
 	}
-
 }

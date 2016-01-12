@@ -1,15 +1,10 @@
-/**
- * virtual car for testing
- * @author Moritz Kellermann
- */
-
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
-import java.util.BitSet;
 
+/**
+ * 
+ * @author Moritz Kellermann
+ *
+ */
 public class VirtualCar {
 	//variables for transmission
 	private byte[] distance = new byte[8]; //distances
@@ -20,24 +15,45 @@ public class VirtualCar {
 	private byte[] rxInstruction; //tour instructions
 	private byte rxSpeed,rxDirection; //speed and direction in percent
 	private boolean stop,park;
-	private boolean speedRequested,gyroscopeRequested,distanceRequested,videoRequested; 
+	//private boolean speedRequested,gyroscopeRequested,distanceRequested,videoRequested; 
 	
-	ServerThread server;
-	ClientThread client;
+	protected ServerThread server;
+	protected ClientThread client;
+	protected Thread serverThread, clientThread;
 	
-	/**
-	 * creates a new object of VirtualCar with an rx and tx socket
-	 * @param appIPv4
-	 * @param appPort
-	 * @param carPort
-	 */
 	public VirtualCar(InetAddress appIPv4, int appPort, int carPort){
 		setDistance(new byte[] {0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08});
 		setSpeed(new byte[] {0x64,0x64,0x64,0x64}); //100% for all wheels =0x64
 		setGyroscope(new byte[] {0x01,0x02,0x03});
 		
-		server = new ServerThread(carPort);
-		client = new ClientThread(appIPv4, appPort);
+		createThread(appIPv4, appPort, carPort);
+		startThreads();
+	}
+	
+	public VirtualCar(InetAddress appIPv4, int appPort, int carPort, byte[] distance, byte[] speed, byte[] xyz){
+		setDistance(distance);
+		setSpeed(speed);
+		setGyroscope(xyz);
+		
+		createThread(appIPv4, appPort, carPort);
+		startThreads();
+	}
+	
+	private void createThread(InetAddress appIPv4, int appPort, int carPort){
+		server = new ServerThread(carPort, this);
+		client = new ClientThread(appIPv4, appPort, this);
+		
+		serverThread = new Thread(server);
+		clientThread = new Thread(client);
+	}
+	
+	private void startThreads(){
+		serverThread.start();
+		clientThread.start();
+	}
+	
+	public byte[] getDistance() {
+		return distance;
 	}
 	
 	public void setDistance(byte[] distance){
@@ -46,10 +62,18 @@ public class VirtualCar {
 		}
 	}
 	
+	public byte[] getSpeed() {
+		return speed;
+	}
+	
 	public void setSpeed(byte[] speed){
 		for(int i=0; i<4; i++){
 			this.speed[i] = speed[i];
 		}
+	}
+	
+	public byte[] getGyroscop() {
+		return xyz;
 	}
 	
 	public void setGyroscope(byte[] xyz){
@@ -57,26 +81,44 @@ public class VirtualCar {
 			this.xyz[i] = xyz[i];
 		}
 	}
-	
-	
-	
 
+	public byte[] getRxInstruction() {
+		return rxInstruction;
+	}
+
+	public void setRxInstruction(byte[] rxInstruction) {
+		this.rxInstruction = rxInstruction;
+	}
+
+	public byte getRxSpeed() {
+		return rxSpeed;
+	}
+
+	public void setRxSpeed(byte rxSpeed) {
+		this.rxSpeed = rxSpeed;
+	}
 	
-	private void transmitRequestedData() {
-		// TODO Auto-generated method stub
-		while(true){
-			if(speedRequested){
-				sendSpeed();
-			}
-			if(gyroscopeRequested){
-				sendGyroscope();
-			}
-			if(distanceRequested){
-				sendDistance();
-			}
-			if(videoRequested){
-				sendVideo();
-			}
-		}
+	public byte getRxDirection() {
+		return rxDirection;
+	}
+
+	public void setRxDirection(byte rxDirection) {
+		this.rxDirection = rxDirection;
+	}
+
+	public boolean isStop() {
+		return stop;
+	}
+
+	public void setStop(boolean stop) {
+		this.stop = stop;
+	}
+
+	public boolean isPark() {
+		return park;
+	}
+
+	public void setPark(boolean park) {
+		this.park = park;
 	}
 }

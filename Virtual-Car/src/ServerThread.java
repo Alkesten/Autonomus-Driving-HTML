@@ -2,26 +2,39 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.util.BitSet;
 
-public class ServerThread implements Runnable{
-
+/**
+ * 
+ * @author Moritz Kellermann
+ *
+ */
+public class ServerThread extends Thread{
 	//connection settings
 	private int carPort;
 	private DatagramSocket dgramSocket;
+	private VirtualCar car;
 	
 	private boolean speedRequested,gyroscopeRequested,distanceRequested,videoRequested; 
 
 	
-	public ServerThread(int carPort) {
-		// TODO Auto-generated constructor stub
-	}
+	public ServerThread(int carPort, VirtualCar car) {
+		this.car = car;
+		this.carPort = carPort;
 
+		try {
+			dgramSocket = new DatagramSocket(this.carPort);
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void run() { 
 		try {
-	        byte[] receivedData = new byte[8];
+	        byte[] receivedData = new byte[8]; //FIXME which size is needed?
 
 	        System.out.printf("Listening on udp:%s:%d%n",
 	                InetAddress.getLocalHost().getHostAddress(), carPort);     
@@ -31,11 +44,14 @@ public class ServerThread implements Runnable{
 	        while(true)
 	        {
 	        	  dgramSocket.receive(receivedPacket);
-	              String sentence = new String( receivedPacket.getData(), 0,
+	              
+	        	  //debug output
+	        	  String sentence = new String( receivedPacket.getData(), 0,
 	                                 receivedPacket.getLength() );
 	              System.out.println("RECEIVED: " + sentence);
 	              
-	              // TODO ACK?
+	              //TODO ACK?
+	              //TODO parallel receive and process? buffer?
 	              processReceived(receivedPacket);
 	        }
 	      } catch (IOException e) {
@@ -46,15 +62,14 @@ public class ServerThread implements Runnable{
 	      }
 	}
 	
-	private void processReceived(DatagramPacket receivedPacket){
+	private synchronized void processReceived(DatagramPacket receivedPacket){
 		byte[] payload = receivedPacket.getData();
 		
 		int id = payload[0];
-		byte[] newPayload = removeId(payload);
 		
 		switch(id){
 			case 21: 
-				receiveSpeedDirection(newPayload);
+				receiveSpeedDirection(removeId(payload));
 				break;
 			case 22:
 				receiveStop();
@@ -63,10 +78,10 @@ public class ServerThread implements Runnable{
 				receiveParking();
 				break;
 			case 24:
-				receiveInstruction(newPayload);
+				receiveInstruction(removeId(payload));
 				break;
 			case 25:
-				receiveDataRequest(newPayload);
+				receiveDataRequest(removeId(payload));
 				break;
 			default:
 				System.out.println("Unknown id received: " + id);
@@ -80,28 +95,27 @@ public class ServerThread implements Runnable{
 		for(int i=0;i < payload.length;i++){
             array[i] = payload[i+1];
 		}
-		
 		return array;
 	}
 	
 	private void receiveSpeedDirection(byte[] payload){
-		rxSpeed = payload[0];
-		rxDirection = payload[1];
+		car.setRxSpeed(payload[0]);
+		car.setRxDirection(payload[1]);
 	}
 	
 	private void receiveStop(){
-		stop = true;
+		car.setStop(true);
 	}
 	
 	private void receiveParking(){
-		park = true;
+		car.setPark(true);
 	}
 	
 	private void receiveInstruction(byte[] payload){
-		rxInstruction = payload;
+		car.setRxInstruction(payload);
 	}
 	
-	private void receiveDataRequest(byte[] payload){
+	private synchronized void receiveDataRequest(byte[] payload){
 		BitSet bits = new BitSet(4);
 	    for (int i = 4; i < 8; i++)
 	    {
@@ -113,7 +127,23 @@ public class ServerThread implements Runnable{
 	    gyroscopeRequested = bits.get(1);
 	    distanceRequested = bits.get(2);
 	    videoRequested = bits.get(3);
-	    
-	    transmitRequestedData();
 	}
+
+	public boolean isSpeedRequested() {
+		return speedRequested;
+	}
+
+	public boolean isGyroscopeRequested() {
+		return gyroscopeRequested;
+	}
+
+	public boolean isDistanceRequested() {
+		return distanceRequested;
+	}
+
+	public boolean isVideoRequested() {
+		return videoRequested;
+	}
+	
+	
 }
