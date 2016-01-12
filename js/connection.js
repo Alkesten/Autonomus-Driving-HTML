@@ -5,11 +5,10 @@
 /*
  * connection configuration variables
  */
-var LPORT = 33333; //local port of the app
-var RPORT = 33334; //remote port of the car
-var LIP = '127.0.0.1'; //local IP address of the phone/app
-var RIP = '192.168.1.10' //remote IP address of the car
-var socket;
+const LPORT = 33333; //local port of the app
+const RPORT = 33334; //remote port of the car
+const LIP = '127.0.0.1'; //local IP address of the phone/app
+const RIP = '192.168.1.10' //remote IP address of the car
 
 /*
  * variables to transmit
@@ -24,50 +23,46 @@ var gx, gy, gz; //gyroscope x,y,z;
 var d1,d2,d3,d4,d5,d6,d7,d8; //distance sensors 1-8
 
 
-var main = function() {
-	//creates a new UDP socket
-	var dgram = require("dgram");
-	socket = dgram.createSocket('udp4');
-	socket.bind(LPORT); //binds local socket to listener port 'LPORT'
-}
+
+//creates a new UDP socket
+const dgram = require('dgram');
+const socket = dgram.createSocket('udp4');
+socket.bind(LPORT); //binds local socket to listener port 'LPORT'
+
 
 //calls onIncommingMsg() on incoming message on the socket 
-socket.on('message', onIncommingMsg(msg, rinfo));
-
-/**
- * checks the id of the received packet and calls the right function.
- * @param {buffer object} msg - received UDP payload
- * @param {object} rinfo - Remote address information
- */
-function onIncommingMsg(msg, rinfo){
-	//TODO check if msg contains hex values.
+socket.on('message', function(msg, rinfo){
+	console.log("RECEIVED: id: "+ msg[0] + ", length: "+ msg.length + ", address: "+ rinfo.address + ", port: " + rinfo.port);
 	switch(msg[0]){
-	case 11:
-		speedFL = msg[1];
-		speedFR = msg[2];
-		speedBL = msg[3];
-		speedBR = msg[4];
-		break;
-	case 12:
-		gx = msg[1];
-		gy = msg[2];
-		gz = msg[3];
-		break;
-	case 13:
-		d1 = msg[1];
-		d2 = msg[2];
-		d3 = msg[3];
-		d4 = msg[4];
-		d5 = msg[5];
-		d6 = msg[6];
-		d7 = msg[7];
-		d8 = msg[8];
-		break;
-	default:
-		console.log("Received message with unknown id: "+ msg[0] + ", length: "+ msg.length + ", address: "+ rinfo.address + ", port: " + rinfo.port + " - Message as been dropped.");
-		break;
+		case 11:
+			console.log("Speed Data Received");
+			speedFL = msg[1];
+			speedFR = msg[2];
+			speedBL = msg[3];
+			speedBR = msg[4];
+			break;
+		case 12:
+			console.log("Gyroscope Data Received");
+			gx = msg[1];
+			gy = msg[2];
+			gz = msg[3];
+			break;
+		case 13:
+			console.log("Distance Data Received");
+			d1 = msg[1];
+			d2 = msg[2];
+			d3 = msg[3];
+			d4 = msg[4];
+			d5 = msg[5];
+			d6 = msg[6];
+			d7 = msg[7];
+			d8 = msg[8];
+			break;
+		default:
+			console.log("Unknown ID: "+ msg[0] + " - Message as been dropped!");
+			break;
 	}
-}
+});
 
 /**
  * transmits the buffer via UDP connection
@@ -81,9 +76,9 @@ function transmit(buffer){
 	if(typeof buffer === 'Buffer'){//instanceof TypedArray better?
 		//TODO buffer = payload without header?
 		//TODO message size check, otherwise UDP packet will be dropped silently!
-		var length = buffer.length;
-		var offset = 0;
-		server.send(buffer, offset, length, RPORT, RIP)
+		const length = buffer.length;
+		const offset = 0;
+		socket.send(buffer, offset, length, RPORT, RIP)
 	} else {
 		throw "@param 'buffer' has to be typeof 'Buffer' (Node.js Buffer object)";
 	}
@@ -94,7 +89,7 @@ function transmit(buffer){
 * @param {number} direction - range between 0 and 100 where 0-49 is left and 51-100 right, 50 is straight
 */
 function setSpeedDirection(speed, direction){	
-	var id = 0x15; //id for speed & direction: 21
+	const id = 0x15; //id for speed & direction: 21
 	
 	for(i=0; arguments.length; i++){
 		//check for empty parameter
@@ -112,7 +107,7 @@ function setSpeedDirection(speed, direction){
 				a[1] = speed.toString(16);
 				a[2] = direction.toString(16);
 				
-				var buffer = new Buffer(a);
+				const buffer = new Buffer(a);
 				
 				transmit(buffer);
 			}
@@ -126,12 +121,12 @@ function setSpeedDirection(speed, direction){
  * stops the car immediately.
  */
 function setStop(){
-	var id = 0x16; //id for stop: 22
+	const id = 0x16; //id for stop: 22
 	
 	var a = [];	
 	a[0] = id;
 	
-	var buffer = new Buffer(a);
+	const buffer = new Buffer(a);
 	
 	transmit(buffer);
 }
@@ -140,12 +135,12 @@ function setStop(){
  * parks the car.
  */
 function setPark(){
-	var id = 0x17; //id for parking: 23
+	const id = 0x17; //id for parking: 23
 
 	var a = [];	
 	a[0] = id;
 	
-	var buffer = new Buffer(a);
+	const buffer = new Buffer(a);
 	
 	transmit(buffer);
 }
@@ -173,14 +168,14 @@ function buildInstruction(cmd){
  * Sends the builded instruction array.
  */
 function setTour(){
-	var id = 0x18; //id for instruction: 24
+	const id = 0x18; //id for instruction: 24
 
 	var prefix = [];
 	prefix[0] = id;
 	prefix[1] = instruction.length.toString(16);
-	var a = prefix.concat(instruction); //concatenates prefix array (id and length) and instructions array
+	const a = prefix.concat(instruction); //concatenates prefix array (id and length) and instructions array
 	
-	var buffer = new Buffer(a);
+	const buffer = new Buffer(a);
 	
 	transmit(buffer);
 }
@@ -193,27 +188,27 @@ function setTour(){
  * @param {number} video - >0 for request video stream
  */
 function requestData(speed, gyroscope, distance, video){
-	var id = 0x19; //id for request data: 25
-	var request = 0b0000;
+	const id = 0x19; //id for request data: 25
+	var request = 0;
 	
 	if(speed){
-		request = request + 0b1000;
+		request = request + 8;
 	}
 	if(gyroscope){
-		request = request + 0b0100;
+		request = request + 4;
 	}
 	if(distance){
-		request = request + 0b0010;
+		request = request + 2;
 	}
 	if(video){
-		request = request + 0b0001;
+		request = request + 1;
 	}
 	
 	var a = [];
 	a[0] = id;
-	a[1] = request.toString(16);
+	a[1] = request;
 	
-	var buffer = new Buffer(a);
+	const buffer = new Buffer(a);
 	
 	transmit(buffer);
 }
