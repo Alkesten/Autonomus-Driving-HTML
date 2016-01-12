@@ -44,11 +44,10 @@ public class ServerThread extends Thread{
 	        while(true)
 	        {
 	        	  dgramSocket.receive(receivedPacket);
+	        	  byte[] payload = receivedPacket.getData();
+	        	  int id = payload[0];
 	              
-	        	  //debug output
-	        	  String sentence = new String( receivedPacket.getData(), 0,
-	                                 receivedPacket.getLength() );
-	              System.out.println("RECEIVED: " + sentence);
+	              System.out.println("RECEIVED ID: " + id);
 	              
 	              //TODO ACK?
 	              //TODO parallel receive and process? buffer?
@@ -84,7 +83,7 @@ public class ServerThread extends Thread{
 				receiveDataRequest(removeId(payload));
 				break;
 			default:
-				System.out.println("Unknown id received: " + id);
+				System.out.println("Unknown ID: " + id);
 				break;
 		}
 	}
@@ -92,7 +91,7 @@ public class ServerThread extends Thread{
 	private byte[] removeId(byte[] payload){
 		byte[] array = new byte[payload.length-1];
 		
-		for(int i=0;i < payload.length;i++){
+		for(int i=0;i < array.length;i++){
             array[i] = payload[i+1];
 		}
 		return array;
@@ -144,6 +143,4 @@ public class ServerThread extends Thread{
 	public boolean isVideoRequested() {
 		return videoRequested;
 	}
-	
-	
 }
