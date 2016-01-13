@@ -45,7 +45,7 @@ The payload has to start with the specific id of the type of command. The id (bi
 * instruction
 	* id: 24 (0001 1000)
 	* values: 2 + (length of direction array) char: id + length + array of directions
-		* directions: range between 0 and 2: 0 = turn left, 1 = go straight, 2 = turn right
+		* directions: range between 0 and 4: 0 = turn left, 1 = go straight, 2 = turn right, park = 3, stop = 4
 
 * request data command
 	* id: 25 (0001 1001)
