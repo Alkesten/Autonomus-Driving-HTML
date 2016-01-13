@@ -17,9 +17,15 @@ public class ServerThread extends Thread{
 	private DatagramSocket dgramSocket;
 	private VirtualCar car;
 	
+	//true if the data is requested by the app
 	private boolean speedRequested,gyroscopeRequested,distanceRequested,videoRequested; 
 
-	
+	/**
+	 * Create a new ServerThread object for incoming UDP packets.
+	 * 
+	 * @param carPort the UDP port of the car (should be 1024 or higher).
+	 * @param car the car itself for accessing data.
+	 */
 	public ServerThread(int carPort, VirtualCar car) {
 		this.car = car;
 		this.carPort = carPort;
@@ -62,6 +68,11 @@ public class ServerThread extends Thread{
 	      }
 	}
 	
+	/**
+	 * Analyze the packet via ID in the first payload byte and calls the necessary method.
+	 * 
+	 * @param receivedPacket received UDP packet.
+	 */
 	private synchronized void processReceived(DatagramPacket receivedPacket){
 		byte[] payload = receivedPacket.getData();
 		
@@ -89,6 +100,11 @@ public class ServerThread extends Thread{
 		}
 	}
 
+	/**
+	 *  Removes the ID from the payload for further process. Shifts all entries to the left. ([1] becomes [0])
+	 * @param payload payload of the UDP packet with ID at index [0]
+	 * @return new payload without ID - (payload.length-1)
+	 */
 	private byte[] removeId(byte[] payload){
 		byte[] array = new byte[payload.length-1];
 		
@@ -123,6 +139,7 @@ public class ServerThread extends Thread{
 	        payload[0] >>= 1;
 	    }
 	    
+	    //assign true or false to the variable
 	    speedRequested = bits.get(0);
 	    gyroscopeRequested = bits.get(1);
 	    distanceRequested = bits.get(2);

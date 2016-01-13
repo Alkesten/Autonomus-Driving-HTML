@@ -7,30 +7,47 @@ import java.net.InetAddress;
  *
  */
 public class VirtualCar {
-	//variables for transmission
-	private byte[] distance = new byte[8]; //distances
-	private byte[] xyz = new byte[3]; //gyroscope
-	private byte[] speed = new byte[4]; //speed front and back, left and right
+	//data for transmission to the app
+	private byte[] distance = new byte[8];
+	private byte[] xyz = new byte[3]; //gyroscope oder: [x,y,z]
+	private byte[] speed = new byte[4]; //order: [front left, front right, back left, back right]
 	
-	//received variables
+	//received data from the app
 	private byte[] rxInstruction; //tour instructions
-	private byte rxSpeed,rxDirection; //speed and direction in percent
-	private boolean stop,park;
-	//private boolean speedRequested,gyroscopeRequested,distanceRequested,videoRequested; 
-	
+	private byte rxSpeed,rxDirection; //speed and direction in percent (0-100)
+	private boolean stop,park; //true if the car should stop or park
+
+	//Thread objects
 	protected ServerThread server;
 	protected ClientThread client;
 	protected Thread serverThread, clientThread;
 	
+	/**
+	 * Creates an new VirtualCar object with server/client threads and hardcoded values of distance, speed and gyroscope
+	 * 
+	 * @param appIPv4 IPv4 address of the Node.js server
+	 * @param appPort Port of the Node.js server (should be 1024 or higher)
+	 * @param carPort UDP Port of the car server socket (should be 1024 or higher)
+	 */
 	public VirtualCar(InetAddress appIPv4, int appPort, int carPort){
 		setDistance(new byte[] {0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08});
-		setSpeed(new byte[] {0x64,0x64,0x64,0x64}); //100% for all wheels =0x64
+		setSpeed(new byte[] {0x64,0x64,0x64,0x64}); //100(%) for all wheels = 0x64
 		setGyroscope(new byte[] {0x01,0x02,0x03});
 		
 		createThread(appIPv4, appPort, carPort);
 		startThreads();
 	}
 	
+	/**
+	 * Creates an new VirtualCar object with server/client threads.
+	 * 
+	 * @param appIPv4 IPv4 address of the Node.js server
+	 * @param appPort Port of the Node.js server (should be 1024 or higher)
+	 * @param carPort UDP Port of the car server socket (should be 1024 or higher)
+	 * @param distance initial distance data of the car.
+	 * @param speed initial speed data of the car.
+	 * @param xyz initial gyroscope data of the car.
+	 */
 	public VirtualCar(InetAddress appIPv4, int appPort, int carPort, byte[] distance, byte[] speed, byte[] xyz){
 		setDistance(distance);
 		setSpeed(speed);
@@ -40,6 +57,9 @@ public class VirtualCar {
 		startThreads();
 	}
 	
+	/**
+	 * Creates new threads without starting 
+	 */
 	private void createThread(InetAddress appIPv4, int appPort, int carPort){
 		server = new ServerThread(carPort, this);
 		client = new ClientThread(appIPv4, appPort, this);
@@ -48,61 +68,113 @@ public class VirtualCar {
 		clientThread = new Thread(client);
 	}
 	
+	/**
+	 * Starts client and server thread
+	 */
 	private void startThreads(){
 		serverThread.start();
 		clientThread.start();
 	}
 	
+	/**
+	 * @return actual distance of the car in following order: [d1,d2,d3,d4,d5,d6,d7,d8].
+	 */
 	public byte[] getDistance() {
 		return distance;
 	}
 	
-	public void setDistance(byte[] distance){
+	/**
+	 * Should only be called by sensors.
+	 * 
+	 * @param distance actual distance of the car in following order: [d1,d2,d3,d4,d5,d6,d7,d8].
+	 */
+	protected void setDistance(byte[] distance){
 		for(int i=0; i<8; i++){
 			this.distance[i] = distance[i];
 		}
 	}
 	
+	/**
+	 * @return actual speed of the car in following order: [front left, front right, back left, back right].
+	 */
 	public byte[] getSpeed() {
 		return speed;
 	}
 	
-	public void setSpeed(byte[] speed){
+	/**
+	 * Should only be called by sensors.
+	 * 
+	 * @param speed actual speed of the car in following order: [front left, front right, back left, back right].
+	 */
+	protected void setSpeed(byte[] speed){
 		for(int i=0; i<4; i++){
 			this.speed[i] = speed[i];
 		}
 	}
 	
+	/**
+	 * 
+	 * @return actual gyroscope values in following order: [x,y,z].
+	 */
 	public byte[] getGyroscop() {
 		return xyz;
 	}
 	
-	public void setGyroscope(byte[] xyz){
+	/**
+	 * Should only be called by sensors.
+	 * 
+	 * @param xyz actual gyroscope values in following order: [x,y,z].
+	 */
+	protected void setGyroscope(byte[] xyz){
 		for(int i=0; i<3; i++){
 			this.xyz[i] = xyz[i];
 		}
 	}
 
+	/**
+	 * 
+	 * @return array of the received instructions.
+	 */
 	public byte[] getRxInstruction() {
 		return rxInstruction;
 	}
 
+	/**
+	 * 
+	 * @param rxInstruction range between 0 and 4: 0 = turn left, 1 = go straight, 2 = turn right, park = 3, stop = 4
+	 */
 	public void setRxInstruction(byte[] rxInstruction) {
 		this.rxInstruction = rxInstruction;
 	}
 
+	/**
+	 * 
+	 * @return received speed in percent (0-100)
+	 */
 	public byte getRxSpeed() {
 		return rxSpeed;
 	}
 
+	/**
+	 * 
+	 * @param rxSpeed sets the received speed in percent (0-100)
+	 */
 	public void setRxSpeed(byte rxSpeed) {
 		this.rxSpeed = rxSpeed;
 	}
 	
+	/**
+	 * 
+	 * @return received direction: range between 0 and 100: where 0-49 is left and 51-100 right, 50 is straight
+	 */
 	public byte getRxDirection() {
 		return rxDirection;
 	}
 
+	/**
+	 * 
+	 * @param rxDirection received direction: range between 0 and 100: where 0-49 is left and 51-100 right, 50 is straight
+	 */
 	public void setRxDirection(byte rxDirection) {
 		this.rxDirection = rxDirection;
 	}

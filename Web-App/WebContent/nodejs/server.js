@@ -5,47 +5,49 @@
 /*
  * connection configuration variables
  */
-const LPORT = 33333; //local port of the app
-const RPORT = 33334; //remote port of the car
-const LIP = '127.0.0.1'; //local IP address of the phone/app
-const RIP = '192.168.1.10' //remote IP address of the car
+var LPORT = 33333; //local port of the app
+var RPORT = 33334; //remote port of the car
+var LIP = '127.0.0.1'; //local IP address of the phone/app
+var RIP = '192.168.1.10' //remote IP address of the car
+var REST_Port = 30000;
 
 /*
- * variables to transmit
+ * data for transmission to the car
  */
 var instruction = [] //array of tour instructions
 
 /*
- * received variables
+ * received data from the car
  */
 var speedFL, speedFR, speedBL, speedBR; //speed front and back - left and right
 var gx, gy, gz; //gyroscope x,y,z;
 var d1,d2,d3,d4,d5,d6,d7,d8; //distance sensors 1-8
-
-
 
 //creates a new UDP socket
 const dgram = require('dgram');
 const socket = dgram.createSocket('udp4');
 socket.bind(LPORT); //binds local socket to listener port 'LPORT'
 
+/**
+ * listen event: processes incoming UDP packets given their id.
+ */
 socket.on('message', function(msg, rinfo){
 	console.log("RECEIVED: id: "+ msg[0] + ", length: "+ msg.length + ", address: "+ rinfo.address + ", port: " + rinfo.port);
 	switch(msg[0]){
-		case 11:
+		case 11: //speed
 			console.log("Speed Data Received");
 			speedFL = msg[1];
 			speedFR = msg[2];
 			speedBL = msg[3];
 			speedBR = msg[4];
 			break;
-		case 12:
+		case 12: //gyroscope
 			console.log("Gyroscope Data Received");
 			gx = msg[1];
 			gy = msg[2];
 			gz = msg[3];
 			break;
-		case 13:
+		case 13: //distance
 			console.log("Distance Data Received");
 			d1 = msg[1];
 			d2 = msg[2];
@@ -56,7 +58,7 @@ socket.on('message', function(msg, rinfo){
 			d7 = msg[7];
 			d8 = msg[8];
 			break;
-		default:
+		default: //unknown id
 			console.log("Unknown ID: "+ msg[0] + " - Message as been dropped!");
 			break;
 	}
@@ -210,3 +212,51 @@ function requestData(speed, gyroscope, distance, video){
 	
 	transmit(buffer);
 }
+
+
+//Express app: communication between JS/HTML and the server (node.js) via REST
+const express = require('express');
+const bodyParser = require("body-parser");
+const app = express();
+app.listen(REST_Port);
+
+//configuring express to use body-parser as middle-ware.
+app.use(bodyParser.urlencoded({
+	extended : false
+}));
+app.use(bodyParser.json());
+
+app.get('/speed', function(req, res) {
+	res.send([ speedFL, speedFR, speedBL, speedBR ]);
+});
+
+app.get('/gyroscope', function(req, res) {
+	res.send([ gx, gy, gz ]);
+});
+
+app.get('/distance', function(req, res) {
+	res.send([ d1, d2, d3, d4, d5, d6, d7, d8 ]);
+});
+
+app.post('/request', function(req, res) {
+	//FIXME parse to boolean
+	var reqSpeed = req.body.speed;
+	var reqDistance = req.body.distance;
+	var reqGyroscope = req.body.gyroscope;
+	var reqVideo = req.body.video;
+
+	requestData(reqSpeed, reqGyroscope, reqDistance, reqVideo);
+});
+
+app.post('/stop', function(req, res) {
+	setStop();	
+});
+
+app.post('/park', function(req, res) {
+	setPark();
+});
+
+app.post('/instruction', function(req, res) {
+	//TODO accept unknown array length
+	res.send('POST request to homepage');
+});
