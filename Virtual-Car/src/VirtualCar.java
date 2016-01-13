@@ -1,8 +1,9 @@
 import java.net.InetAddress;
 
 /**
+ * Emulates the autonomous car for testing purpose.
  * 
- * @author Moritz Kellermann
+ * @author Moritz Kellermann (moritz.kellermann [at] in.tum.de)
  *
  */
 public class VirtualCar {

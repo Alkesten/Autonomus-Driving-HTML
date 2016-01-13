@@ -1,5 +1,5 @@
-/*
- * @author Moritz Kellermann
+/**
+ * @author Moritz Kellermann (moritz.kellermann [at] in.tum.de)
  */
 
 /*
@@ -29,8 +29,6 @@ const dgram = require('dgram');
 const socket = dgram.createSocket('udp4');
 socket.bind(LPORT); //binds local socket to listener port 'LPORT'
 
-
-//calls onIncommingMsg() on incoming message on the socket 
 socket.on('message', function(msg, rinfo){
 	console.log("RECEIVED: id: "+ msg[0] + ", length: "+ msg.length + ", address: "+ rinfo.address + ", port: " + rinfo.port);
 	switch(msg[0]){

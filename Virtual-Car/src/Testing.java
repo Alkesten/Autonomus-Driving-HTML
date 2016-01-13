@@ -1,6 +1,11 @@
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+/**
+ * 
+ * @author Moritz Kellermann (moritz.kellermann [at] in.tum.de)
+ *
+ */
 public class Testing {
 	
 	static private VirtualCar car;

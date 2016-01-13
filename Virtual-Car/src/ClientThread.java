@@ -5,8 +5,9 @@ import java.net.InetAddress;
 import java.net.SocketException;
 
 /**
+ * Thread class for sending data via UDP to the app.
  * 
- * @author Moritz Kellermann
+ * @author Moritz Kellermann (moritz.kellermann [at] in.tum.de)
  *
  */
 public class ClientThread extends Thread{

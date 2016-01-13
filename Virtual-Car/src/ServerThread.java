@@ -6,8 +6,9 @@ import java.net.SocketException;
 import java.util.BitSet;
 
 /**
+ * Thread class for receiving data via UDP from the app.
  * 
- * @author Moritz Kellermann
+ * @author Moritz Kellermann (moritz.kellermann [at] in.tum.de)
  *
  */
 public class ServerThread extends Thread{
