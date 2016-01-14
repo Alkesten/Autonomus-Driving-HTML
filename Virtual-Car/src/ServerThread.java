@@ -54,7 +54,7 @@ public class ServerThread extends Thread{
 	        	  byte[] payload = receivedPacket.getData();
 	        	  int id = payload[0];
 	              
-	              System.out.println("RECEIVED ID: " + id);
+	              System.out.print("RECEIVED ID: " + id);
 	              
 	              //TODO ACK?
 	              //TODO parallel receive and process? buffer?
@@ -79,23 +79,28 @@ public class ServerThread extends Thread{
 		int id = payload[0];
 		
 		switch(id){
-			case 21: 
+			case 21:
+				System.out.println(" (speed/direction)");
 				receiveSpeedDirection(removeId(payload));
 				break;
 			case 22:
+				System.out.println(" (stop cmd)");
 				receiveStop();
 				break;
 			case 23:
+				System.out.println(" (park cmd)");
 				receiveParking();
 				break;
 			case 24:
+				System.out.println(" (tour instructions)");
 				receiveInstruction(removeId(payload));
 				break;
 			case 25:
+				System.out.println(" (data request)");
 				receiveDataRequest(removeId(payload));
 				break;
 			default:
-				System.out.println("Unknown ID: " + id);
+				System.err.println(" (Unknown ID!)");
 				break;
 		}
 	}
@@ -121,9 +126,11 @@ public class ServerThread extends Thread{
 	
 	private void receiveStop(){
 		car.setStop(true);
+		System.out.println("car stops");
 	}
 	
 	private void receiveParking(){
+		System.out.println("car parks");
 		car.setPark(true);
 	}
 	
@@ -132,18 +139,24 @@ public class ServerThread extends Thread{
 	}
 	
 	private synchronized void receiveDataRequest(byte[] payload){
-		BitSet bits = new BitSet(4);
+		byte request = payload[0];
+		BitSet bits = new BitSet(8);
 	    for (int i = 4; i < 8; i++)
 	    {
-	        bits.set(i, (payload[0] & 1) == 1);
-	        payload[0] >>= 1;
+	        bits.set(i, (request & 1) == 1);
+	        request >>= 1;
 	    }
 	    
 	    //assign true or false to the variable
-	    speedRequested = bits.get(0);
-	    gyroscopeRequested = bits.get(1);
-	    distanceRequested = bits.get(2);
-	    videoRequested = bits.get(3);
+	    speedRequested = bits.get(7);
+	    gyroscopeRequested = bits.get(6);
+	    distanceRequested = bits.get(5);
+	    videoRequested = bits.get(4);
+	    
+		System.out.println("New reqest = Speed: " + speedRequested 
+				+ ", Gyrospcope: " + gyroscopeRequested 
+				+ ", Distance: " + distanceRequested 
+				+ ", Video: " + videoRequested);
 	}
 
 	public boolean isSpeedRequested() {

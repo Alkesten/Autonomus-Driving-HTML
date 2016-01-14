@@ -145,6 +145,37 @@ public class VirtualCar {
 	 */
 	public void setRxInstruction(byte[] rxInstruction) {
 		this.rxInstruction = rxInstruction;
+		
+		byte number = rxInstruction[0];
+		rxInstruction[0] = (byte)0xFF;
+		
+		System.out.println("number of instructions: "+number);
+		for(byte cmd : rxInstruction){
+			switch(cmd)
+			{
+			case 0:
+				System.out.println("left");
+				break;
+			case 1:
+				System.out.println("straight");
+				break;
+			case 2:
+				System.out.println("right");
+				break;
+			case 3:
+				System.out.println("park");
+				break;
+			case 4:
+				System.out.println("stop");
+				break;
+			case (byte)0xFF:
+				//deleted number of instructions
+				break;
+			default:
+				System.err.println("error in instruction: " + cmd);
+				break;
+			}
+		}
 	}
 
 	/**
@@ -161,6 +192,7 @@ public class VirtualCar {
 	 */
 	public void setRxSpeed(byte rxSpeed) {
 		this.rxSpeed = rxSpeed;
+		System.out.println("new rxSpeed: "+this.rxSpeed);
 	}
 	
 	/**
@@ -177,6 +209,7 @@ public class VirtualCar {
 	 */
 	public void setRxDirection(byte rxDirection) {
 		this.rxDirection = rxDirection;
+		System.out.println("new rxDirection: "+this.rxDirection);
 	}
 
 	public boolean isStop() {
