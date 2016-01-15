@@ -21,11 +21,12 @@ The payload has to start with the specific id of the type of command. The id (bi
 	* id: 13 (0000 1101)
 	* values: 9 unsigned char: id + d1 + d2 + d3 + d4 + d5 + d6 + d7 + d8
 
-* video *(draft)*
+* video
 	* id: 14 (0000 1110)
-	* values: (640x480 = 307.200 bits) <i>-> 640 bit / 32 bit = 20 * 480 lines = 9.600 UDP payload lines</i>
-		* <i>(38.400 bytes per frame / 548 MTU = 71 packages) -> transmit just the diff would decrease overhead. Which codec?</i>
-
+	* values: (640x480 = 307.200 bit) = (80x60 = 4.800 byte) + 1 byte for the ID
+		* MTU of Ethernet = 1.500 byte (= UDP payload [max. 1.472 B] + UDP header [8 B]+ IPv4 Header [20 B]) 
+			* => manual or automatic UDP or IP fragmentation (incl. seq number)?
+		* The video will be transmitted as byte[80][60] 2D array since we have just black and white (1 or 0).
 
 ### Trasmit
 * speed and direction
