@@ -1,3 +1,7 @@
+﻿var speed = false;
+var distance = false;
+var gyroscope = false;
+
 var main = function() {
 	var active = false;
 	var lastClicked = '';
@@ -76,7 +80,7 @@ var main = function() {
 
 		$(this).addClass('active');
 		$("#" + tabId).addClass('active');
-	})
+	});
 
 	$('ul.queue').sortable();
 };
@@ -85,3 +89,40 @@ $(document).ready(main);
 $(document).on('click', '.delete-button', function() {
 	$(this).parent().remove();
 });
+
+function sendRequest(form){
+	 speed = form.getElementById('checkboxes-0').value;
+	 distance = form.getElementById('checkboxes-1').value;
+	 gyroscope = form.getElementById('checkboxes-2').value;
+	
+	//TODO Send the values via POST to /request
+}
+
+function stopCar(){
+	//TODO Send via POST to /stop
+}
+
+function parkCar(){
+	//TODO Send via POST to /park
+}
+
+function sendInstruction(intruction){
+	//TODO Send instruction via POST to /instruction
+}
+
+function getValues(){
+	//While loop?
+	
+	if(speed){
+		//TODO Send GET to /speed
+		
+	}
+	if(distance){
+		//TODO Send GET to /distance
+
+	}
+	if(gyroscope){
+		//TODO Send GET to /gyroscope
+
+	}
+}

@@ -1,20 +1,16 @@
-/**
- * @author Moritz Kellermann (moritz.kellermann [at] in.tum.de)
- */
-
-/*
+﻿/*
  * connection configuration variables
  */
-var LPORT = 33333; //local port of the app
+var LPORT = 3000; //local port of the app
 var RPORT = 33334; //remote port of the car
 var LIP = '127.0.0.1'; //local IP address of the phone/app
-var RIP = '192.168.1.10' //remote IP address of the car
+var RIP = '192.168.1.10'; //remote IP address of the car
 var REST_Port = 30000;
 
 /*
  * data for transmission to the car
  */
-var instruction = [] //array of tour instructions
+var instruction = []; //array of tour instructions
 
 /*
  * received data from the car
@@ -24,8 +20,8 @@ var gx, gy, gz; //gyroscope x,y,z;
 var d1,d2,d3,d4,d5,d6,d7,d8; //distance sensors 1-8
 
 //creates a new UDP socket
-const dgram = require('dgram');
-const socket = dgram.createSocket('udp4');
+var dgram = require('dgram');
+var socket = dgram.createSocket('udp4');
 socket.bind(LPORT); //binds local socket to listener port 'LPORT'
 
 /**
@@ -76,9 +72,9 @@ function transmit(buffer){
 	if(typeof buffer === 'Buffer'){//instanceof TypedArray better?
 		//TODO buffer = payload without header?
 		//TODO message size check, otherwise UDP packet will be dropped silently!
-		const length = buffer.length;
-		const offset = 0;
-		socket.send(buffer, offset, length, RPORT, RIP)
+		var length = buffer.length;
+		var offset = 0;
+		socket.send(buffer, offset, length, RPORT, RIP);
 	} else {
 		throw "@param 'buffer' has to be typeof 'Buffer' (Node.js Buffer object)";
 	}
@@ -89,9 +85,9 @@ function transmit(buffer){
 * @param {number} direction - range between 0 and 100 where 0-49 is left and 51-100 right, 50 is straight
 */
 function setSpeedDirection(speed, direction){	
-	const id = 0x15; //id for speed & direction: 21
+	var id = 0x15; //id for speed & direction: 21
 	
-	for(i=0; arguments.length; i++){
+	for(var i=0; arguments.length; i++){
 		//check for empty parameter
 		if(arguements[i] === undefinded){
 			throw "arguments are empty!";
@@ -107,7 +103,7 @@ function setSpeedDirection(speed, direction){
 				a[1] = speed.toString(16);
 				a[2] = direction.toString(16);
 				
-				const buffer = new Buffer(a);
+				var buffer = new Buffer(a);
 				
 				transmit(buffer);
 			}
@@ -121,12 +117,12 @@ function setSpeedDirection(speed, direction){
  * stops the car immediately.
  */
 function setStop(){
-	const id = 0x16; //id for stop: 22
+	var id = 0x16; //id for stop: 22
 	
 	var a = [];	
 	a[0] = id;
 	
-	const buffer = new Buffer(a);
+	var buffer = new Buffer(a);
 	
 	transmit(buffer);
 }
@@ -135,12 +131,12 @@ function setStop(){
  * parks the car.
  */
 function setPark(){
-	const id = 0x17; //id for parking: 23
+	var id = 0x17; //id for parking: 23
 
 	var a = [];	
 	a[0] = id;
 	
-	const buffer = new Buffer(a);
+	var buffer = new Buffer(a);
 	
 	transmit(buffer);
 }
@@ -168,14 +164,14 @@ function buildInstruction(cmd){
  * Sends the builded instruction array.
  */
 function setTour(){
-	const id = 0x18; //id for instruction: 24
+	var id = 0x18; //id for instruction: 24
 
 	var prefix = [];
 	prefix[0] = id;
 	prefix[1] = instruction.length.toString(16);
-	const a = prefix.concat(instruction); //concatenates prefix array (id and length) and instructions array
+	var a = prefix.concat(instruction); //concatenates prefix array (id and length) and instructions array
 	
-	const buffer = new Buffer(a);
+	var buffer = new Buffer(a);
 	
 	transmit(buffer);
 }
@@ -188,7 +184,7 @@ function setTour(){
  * @param {number} video - >0 for request video stream
  */
 function requestData(speed, gyroscope, distance, video){
-	const id = 0x19; //id for request data: 25
+	var id = 0x19; //id for request data: 25
 	var request = 0;
 	
 	if(speed){
@@ -208,17 +204,65 @@ function requestData(speed, gyroscope, distance, video){
 	a[0] = id;
 	a[1] = request;
 	
-	const buffer = new Buffer(a);
+	var buffer = new Buffer(a);
 	
 	transmit(buffer);
 }
 
+var express = require('express');
+var path = require('path');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
-//Express app: communication between JS/HTML and the server (node.js) via REST
-const express = require('express');
-const bodyParser = require("body-parser");
-const app = express();
-app.listen(REST_Port);
+var routes = require('./routes/index');
+var users = require('./routes/users');
+
+var app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', routes);
+app.use('/users', users);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
+});
 
 //configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({
@@ -260,3 +304,6 @@ app.post('/instruction', function(req, res) {
 	//TODO accept unknown array length
 	res.send('POST request to homepage');
 });
+
+app.listen(REST_Port);
+module.exports = app;
