@@ -1,62 +1,95 @@
 # Transmission Protocol
+## MTU and payload
+The __MTU__ is __1.468 byte__
+
+
+__payload__ if __UDP__ is used:
+```
+1.468 MTU
+- 20 IP header
+- 8 UDP header
+= 1.440 byte
+```
+
+
+__payload__ if __TCP__ is used:
+```
+1.468 MTU
+- 20 IP header
+- 20 TCP header
+= 1.428 byte
+```
 
 ## UDP Packet
-The header has 8 octets (bytes = B) = 2 * (2 * 8) bit. source port (2 B) + destination port (2 B) + length (2 B) + checksum (2 B)
-The UDP payload has to be filled up until octets are completed. All hex values are presented in big endian.
+The header has 8 byte = `2 * (2 * 8) bit`. source port (2 byte) + destination port (2 byte) + length (2 byte) + checksum (2 byte)
+The UDP payload has to be filled up until octets are completed. All hex values are presented in __big endian__.
 
 
 ## Commands
-The payload has to start with the specific id of the type of command. The id (binary) is one byte long. 
+The payload has to start with the specific id of the type of command. The id is one byte long. 
 
 ### Receive
 * speed 
-	* id: 11 (0000 1011)
+	* id: 11 (`0x0B`)
 	* values: 5 char: id + front left + front right + back left + back right
+		* <i>values are rounded down to char</i>
 
 * gyroscope
-	* id: 12 (0000 1100)
+	* id: 12 (`0x0C`)
 	* values: 4 char: id + x + y + z
+		* <i>values are rounded down to char</i>
 
 * distance
-	* id: 13 (0000 1101)
+	* id: 13 (`0x0D`)
 	* values: 9 unsigned char: id + d1 + d2 + d3 + d4 + d5 + d6 + d7 + d8
+		* <i>values are rounded down to char</i>
 
 * video
-	* id: 14 (0000 1110)
-	* values: (640x480 = 307.200 bit) = (80x60 = 4.800 byte) + 1 byte for the ID
-		* MTU of Ethernet = 1.500 byte (= UDP payload [max. 1.472 B] + UDP header [8 B]+ IPv4 Header [20 B]) 
-			* => manual or automatic UDP or IP fragmentation (incl. seq number)?
-		* The video will be transmitted as byte[80][60] 2D array since we have just black and white (1 or 0).
+	* id: 14 (`0x0E`)
+	* values: 1.440 char: id + seq + block + 16 image rows
+		* seq (158 byte): consecutively numbered sequence start at 0
+		* block (1 byte): to idetify the image fragment 0-29 
+		* immage fragment (1.280 byte): (total image: 640x480 = 307.200 bit) split up in 30 parts = 307.200 bit / 30 = 10.240 bit = 1.280 byte per image fragment
+
+* current instruction
+	* id: 15 (`0x0F`)
+	* values: 2 + [length of instruction array] char: id + length + array of instructions
+		* length (1 byte): length of instruction array
+		* instructions[] ([length] byte): range between 0 and 4: 0 = turn left, 1 = go straight, 2 = turn right, park = 3, stop = 4
 
 ### Trasmit
+* connection handshake
+	* id: 20 (`0x14`)
+	* values: 5 char: id + dataport + videoport
+		* dataport (2 byte): 0-65535
+		* videoport (2 byte): 0-65535 
+
 * speed and direction
-	* id: 21 (0001 0101)
+	* id: 21 (`0x15`)
 	* values: 3 char: id + speed + direction
 		* speed: range between 0 and 100
 		* direction: range between 0 and 100: where 0-49 is left and 51-100 right, 50 is straight
 
 * stop
-	* id: 22 (0001 0110)
+	* id: 22 (`0x16`)
 	* values: 1 char: id
 
 * parking
-	* id: 23 (0001 0111)
+	* id: 23 (`0x17`)
 	* values: 1 char: id
 
 * instruction
-	* id: 24 (0001 1000)
-	* values: 2 + (length of direction array) char: id + length + array of directions
-		* directions: range between 0 and 4: 0 = turn left, 1 = go straight, 2 = turn right, park = 3, stop = 4
+	* id: 24 (`0x18`)
+	* values: 2 + [length of instruction array] char: id + length + array of instructions
+		* length (1 byte): length of instruction array
+		* instructions[] ([length] byte): range between 0 and 4: 0 = turn left, 1 = go straight, 2 = turn right, park = 3, stop = 4
 
 * request data command
-	* id: 25 (0001 1001)
+	* id: 25 (`0x19`)
 	* values: 2 char: id + requested data
-		* requestet datatypes
-			* speed (1000)
-			* gyroscope (0100)
-			* distance (0010)
-			* video (0001)
-			* <i>example: request speed and distance: 0b1000 + 0b0010 = 0b10010 = 0x0A</i>
-
-### Video
-The video will be fetched from the car on another socket. 
+		* requestet datatypes (1 byte):
+			* speed (`0b0000 1000 = 0x08`)
+			* gyroscope (`0000 0100 = 0x04`)
+			* distance (`0000 0010 = 0x02`)
+			* video (`0000 0001 = 0x01`)
+				* <i>example: request speed and distance: ```0b0000 1000 + 0b0000 0010 = 0b0000 1010 = 0x0A```</i>
