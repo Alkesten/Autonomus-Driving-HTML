@@ -42,6 +42,7 @@ The payload has to start with the specific id of the type of command. The id is 
 * __distance__
 	* id: 13 (`0x0D`)
 	* values: 9 unsigned char: id + d1 + d2 + d3 + d4 + d5 + d6 + d7 + d8
+		* d1-8: clockwise 1-8 d1 = front left, d2 = front straight, d3 = front right, d4 = right side ...
 		* <i>values are rounded down to char</i>
 
 * __video__
