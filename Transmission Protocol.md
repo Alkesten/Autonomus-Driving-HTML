@@ -29,22 +29,22 @@ The UDP payload has to be filled up until octets are completed. All hex values a
 The payload has to start with the specific id of the type of command. The id is one byte long. 
 
 ### Receive
-* speed 
+* __speed__ 
 	* id: 11 (`0x0B`)
 	* values: 5 char: id + front left + front right + back left + back right
 		* <i>values are rounded down to char</i>
 
-* gyroscope
+* __gyroscope__
 	* id: 12 (`0x0C`)
 	* values: 4 char: id + x + y + z
 		* <i>values are rounded down to char</i>
 
-* distance
+* __distance__
 	* id: 13 (`0x0D`)
 	* values: 9 unsigned char: id + d1 + d2 + d3 + d4 + d5 + d6 + d7 + d8
 		* <i>values are rounded down to char</i>
 
-* video
+* __video__
 	* id: 14 (`0x0E`)
 	* values: 1.440 char: id + seq + block + 16 image rows
 		* seq (158 byte): consecutively numbered sequence start at 0
@@ -58,33 +58,33 @@ The payload has to start with the specific id of the type of command. The id is 
 		* instructions[] ([length] byte): range between 0 and 4: 0 = turn left, 1 = go straight, 2 = turn right, park = 3, stop = 4
 
 ### Trasmit
-* connection handshake
+* __connection handshake__
 	* id: 20 (`0x14`)
 	* values: 5 char: id + dataport + videoport
 		* dataport (2 byte): 0-65535
 		* videoport (2 byte): 0-65535 
 
-* speed and direction
+* __speed and direction__
 	* id: 21 (`0x15`)
 	* values: 3 char: id + speed + direction
 		* speed: range between 0 and 100
 		* direction: range between 0 and 100: where 0-49 is left and 51-100 right, 50 is straight
 
-* stop
+* __stop__
 	* id: 22 (`0x16`)
 	* values: 1 char: id
 
-* parking
+* __parking__
 	* id: 23 (`0x17`)
 	* values: 1 char: id
 
-* instruction
+* __instruction__
 	* id: 24 (`0x18`)
 	* values: 2 + [length of instruction array] char: id + length + array of instructions
 		* length (1 byte): length of instruction array
 		* instructions[] ([length] byte): range between 0 and 4: 0 = turn left, 1 = go straight, 2 = turn right, park = 3, stop = 4
 
-* request data command
+* __request data command__
 	* id: 25 (`0x19`)
 	* values: 2 char: id + requested data
 		* requestet datatypes (1 byte):
