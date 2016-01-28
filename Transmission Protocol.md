@@ -47,8 +47,8 @@ The payload has to start with the specific id of the type of command. The id is 
 
 * __video__
 	* id: 14 (`0x0E`)
-	* values: 1.440 char: id + seq + block + 16 image rows
-		* seq (158 byte): consecutively numbered sequence start at 0
+	* values: 1.285 char: id + seq + block + 16 image rows
+		* seq (3 byte): consecutively numbered sequence start at 0
 		* block (1 byte): to idetify the image fragment 0-29 
 		* immage fragment (1.280 byte): (total image: 640x480 = 307.200 bit) split up in 30 parts = 307.200 bit / 30 = 10.240 bit = 1.280 byte per image fragment
 
