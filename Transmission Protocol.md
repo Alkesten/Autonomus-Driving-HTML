@@ -12,7 +12,7 @@ __payload__ if __UDP__ is used:
 ```
 
 
-__payload__ if __TCP__ is used:
+__payload__ if __TCP__ is used <i>(not used)</i>:
 ```
 1.468 MTU
 - 20 IP header
@@ -26,7 +26,7 @@ The UDP payload has to be filled up until octets are completed. All hex values a
 
 
 ## Commands
-The payload has to start with the specific id of the type of command. The id is one byte long. 
+__All transmissions are send as UDP packets__. The payload has to start with the specific id of the type of command. The id is one byte long. 
 
 ### Receive
 * __speed__ 
@@ -48,9 +48,9 @@ The payload has to start with the specific id of the type of command. The id is 
 * __video__
 	* id: 14 (`0x0E`)
 	* values: 1.285 char: id + seq + block + 16 image rows
-		* seq (3 byte): consecutively numbered sequence start at 0
+		* seq (3 byte): consecutively numbered sequence starts at 0
 		* block (1 byte): to idetify the image fragment 0-29 
-		* immage fragment (1.280 byte): (total image: 640x480 = 307.200 bit) split up in 30 parts = 307.200 bit / 30 = 10.240 bit = 1.280 byte per image fragment
+		* image fragment (1.280 byte): (total image: 640x480 = 307.200 bit) split up in 30 parts = 307.200 bit / 30 = 10.240 bit = 1.280 byte per image fragment
 
 * current instruction
 	* id: 15 (`0x0F`)
