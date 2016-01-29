@@ -121,7 +121,7 @@ function getValues(){
 	
 	if(speed){
 		//TODO Send GET to /speed
-		$.get('http://localhost:3000/speed', {}, function(postData){
+		$.get('http://localhost:3000', {}, function(postData){
   		postData();
   		//var values = parsefloat(postData);
 		});
