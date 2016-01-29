@@ -94,13 +94,13 @@ function sendRequest(form){
 	 speed = form.getElementById('checkboxes-0').value;
 	 distance = form.getElementById('checkboxes-1').value;
 	 gyroscope = form.getElementById('checkboxes-2').value;
-	 function getValues();
+	 getValues();
 	//TODO Send the values via POST to /request
 }
 
 function postData(form){
-		var x=document.getElementById('outputtext')
-		alert(x.innerHTML)
+		var x=document.getElementById('outputtext');
+		alert(x.innerHTML);
 }
 
 function stopCar(){
@@ -120,7 +120,6 @@ function getValues(){
 	
 	if(speed){
 		//TODO Send GET to /speed
-		
 		$.get('http://localhost:30000/speed', {}, function(postData){
   		alert(postData);
   		//var values = parsefloat(postData);
