@@ -98,9 +98,10 @@ function sendRequest(form){
 	//TODO Send the values via POST to /request
 }
 
-function postData(form){
-		var x=document.getElementById('outputtext');
+function postData(){
+		var x=$(document).getElementById('outputtext');
 		alert(x.innerHTML);
+		x.value = 'testtext';
 }
 
 function stopCar(){
@@ -120,13 +121,10 @@ function getValues(){
 	
 	if(speed){
 		//TODO Send GET to /speed
-		$.get('http://localhost:30000/speed', {}, function(postData){
-  		alert(postData);
+		$.get('http://localhost:3000/speed', {}, function(postData){
+  		postData();
   		//var values = parsefloat(postData);
 		});
-		
-		 var x=document.getElementById("myHeader");
-  alert(x.innerHTML)
 	}
 	if(distance){
 		//TODO Send GET to /distance
