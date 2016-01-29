@@ -94,6 +94,7 @@ function sendRequest(form){
 	 speed = form.getElementById('checkboxes-0').value;
 	 distance = form.getElementById('checkboxes-1').value;
 	 gyroscope = form.getElementById('checkboxes-2').value;
+	 alert('Testing');
 	 getValues();
 	//TODO Send the values via POST to /request
 }
