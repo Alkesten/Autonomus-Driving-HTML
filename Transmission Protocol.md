@@ -62,7 +62,7 @@ __All transmissions are send as UDP packets__. The payload has to start with the
 * __connection handshake__
 	* id: 20 (`0x14`)
 	* values: 5 char: id + dataport + videoport
-		* dataport (2 byte): 0-65535
+		* dataport (2 byte): 0-65535 (car listens on UDP port 3030)
 		* videoport (2 byte): 0-65535 
 
 * __speed and direction__
