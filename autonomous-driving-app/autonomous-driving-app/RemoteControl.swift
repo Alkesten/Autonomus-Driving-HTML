@@ -1,31 +1,31 @@
 //
-//  Remote.swift
+//  RemoteControl.swift
 //  autonomous-driving-app
 //
-//  Created by Moritz Kellermann on 04.03.16.
+//  Created by Moritz Kellermann on 09.03.16.
 //  Copyright © 2016 Kirsten Rauffer. All rights reserved.
 //
 
 import Foundation
 
-class Remote {
-    let socket: Socket
+class RemoteControl {
+    let dataSocket: DataSocket
     let car: Car
     
     var instructions: [UInt8] = []
     
-    init(socket: Socket, car: Car){
+    init(dataSocket: DataSocket, car: Car){
         self.car = car
-        self.socket = socket
+        self.dataSocket = dataSocket
     }
     
     func setSpeedDirection(speed: UInt8, direction: UInt8){
-        var bytes: [UInt8] = [21, speed, direction]
+        let bytes: [UInt8] = [21, speed, direction]
         transmit(bytes)
     }
     
     func setStop(){
-        var bytes: [UInt8] = [22]
+        let bytes: [UInt8] = [22]
         transmit(bytes)
     }
     
@@ -39,7 +39,7 @@ class Remote {
     }
     
     func requestData(speed: Bool, gyroscope: Bool, distance: Bool, video: Bool){
-        var id: UInt8 = 0x19
+        let id: UInt8 = 0x19
         var request: UInt8 = 0
         
         if(speed){
@@ -54,13 +54,13 @@ class Remote {
         if(video){
             request = request + 1
         }
-    
-        var buffer: [UInt8] = [id, request]
+        
+        let buffer: [UInt8] = [id, request]
         
         transmit(buffer)
     }
     
     func transmit(bytes: [UInt8]){
-        socket.sendStream(bytes)
+        dataSocket.sendStream(bytes)
     }
 }

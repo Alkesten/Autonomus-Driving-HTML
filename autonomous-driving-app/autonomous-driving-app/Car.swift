@@ -18,9 +18,27 @@ class Car {
     
     var instructions = []
     
-    init(ipv4: String, port: UInt16){
+    init(ipv4: String){
         self.ipv4 = ipv4
-        self.port = port
+        self.port = 3030
+        
+        speedFL = 0
+        speedFR = 0
+        speedBL = 0
+        speedBR = 0
+
+        x = 0
+        y = 0
+        z = 0
+
+        d1 = 0
+        d2 = 0
+        d3 = 0
+        d4 = 0
+        d5 = 0
+        d6 = 0
+        d7 = 0
+        d8 = 0
     }
     
     func processRxData(data: NSData){
@@ -51,7 +69,8 @@ class Car {
                 d6 = array[6]
                 d7 = array[7]
                 d8 = array[8]
-
+        default:
+            break
         }
     }
 }

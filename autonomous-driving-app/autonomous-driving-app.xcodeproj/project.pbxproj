@@ -19,7 +19,9 @@
 		01773B201C80B9120063339C /* OutputContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01773B1F1C80B9120063339C /* OutputContoller.swift */; };
 		74CA947197E819F28976449F /* Pods_autonomous_driving_app.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 858A52C5849922F8B570FC19 /* Pods_autonomous_driving_app.framework */; };
 		8E9ED3241C89EBA3004FDA09 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9ED3231C89EBA3004FDA09 /* Car.swift */; };
-		8E9ED3261C8A00BA004FDA09 /* Remote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9ED3251C8A00BA004FDA09 /* Remote.swift */; };
+		8EBDE1511C9061D600784223 /* DataSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBDE1501C9061D600784223 /* DataSocket.swift */; };
+		8EBDE1531C9061E400784223 /* VideoSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBDE1521C9061E400784223 /* VideoSocket.swift */; };
+		8EBDE1551C9061F200784223 /* RemoteControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBDE1541C9061F200784223 /* RemoteControl.swift */; };
 		8EF7DA8A1C89B08900CB7AAC /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF7DA891C89B08900CB7AAC /* Socket.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,7 +62,10 @@
 		63ABFA74AF1F5BFE2BC74A29 /* Pods-autonomous-driving-app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-autonomous-driving-app.release.xcconfig"; path = "Pods/Target Support Files/Pods-autonomous-driving-app/Pods-autonomous-driving-app.release.xcconfig"; sourceTree = "<group>"; };
 		858A52C5849922F8B570FC19 /* Pods_autonomous_driving_app.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_autonomous_driving_app.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E9ED3231C89EBA3004FDA09 /* Car.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
-		8E9ED3251C8A00BA004FDA09 /* Remote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Remote.swift; sourceTree = "<group>"; };
+		8EBDE14C1C8E2CDC00784223 /* autonomous-driving-app-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "autonomous-driving-app-Bridging-Header.h"; sourceTree = "<group>"; };
+		8EBDE1501C9061D600784223 /* DataSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSocket.swift; sourceTree = "<group>"; };
+		8EBDE1521C9061E400784223 /* VideoSocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoSocket.swift; sourceTree = "<group>"; };
+		8EBDE1541C9061F200784223 /* RemoteControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteControl.swift; sourceTree = "<group>"; };
 		8EF7DA891C89B08900CB7AAC /* Socket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Socket.swift; sourceTree = "<group>"; };
 		E98F9F51D9EB07A449DFA34E /* Pods-autonomous-driving-app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-autonomous-driving-app.debug.xcconfig"; path = "Pods/Target Support Files/Pods-autonomous-driving-app/Pods-autonomous-driving-app.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -126,8 +131,11 @@
 				01773AF61C80A3960063339C /* LaunchScreen.storyboard */,
 				01773AF91C80A3960063339C /* Info.plist */,
 				8EF7DA891C89B08900CB7AAC /* Socket.swift */,
+				8EBDE1521C9061E400784223 /* VideoSocket.swift */,
+				8EBDE1501C9061D600784223 /* DataSocket.swift */,
 				8E9ED3231C89EBA3004FDA09 /* Car.swift */,
-				8E9ED3251C8A00BA004FDA09 /* Remote.swift */,
+				8EBDE1541C9061F200784223 /* RemoteControl.swift */,
+				8EBDE14C1C8E2CDC00784223 /* autonomous-driving-app-Bridging-Header.h */,
 			);
 			path = "autonomous-driving-app";
 			sourceTree = "<group>";
@@ -353,12 +361,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				01773AF01C80A3960063339C /* AutonomousControlController.swift in Sources */,
+				8EBDE1551C9061F200784223 /* RemoteControl.swift in Sources */,
 				01773AEC1C80A3960063339C /* AppDelegate.swift in Sources */,
 				8EF7DA8A1C89B08900CB7AAC /* Socket.swift in Sources */,
-				8E9ED3261C8A00BA004FDA09 /* Remote.swift in Sources */,
 				01773AEE1C80A3960063339C /* ManualControlController.swift in Sources */,
 				01773B201C80B9120063339C /* OutputContoller.swift in Sources */,
+				8EBDE1531C9061E400784223 /* VideoSocket.swift in Sources */,
 				8E9ED3241C89EBA3004FDA09 /* Car.swift in Sources */,
+				8EBDE1511C9061D600784223 /* DataSocket.swift in Sources */,
 				01001CF81C8266C300E14760 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
