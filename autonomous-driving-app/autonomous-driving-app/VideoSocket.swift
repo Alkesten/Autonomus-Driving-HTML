@@ -17,6 +17,7 @@ class VideoSocket: Socket {
         video = Video()
         super.init(car: car, localPort: localPort)
         setupConnection()
+        print("new VideoSocket created")
     }
 
     func setupConnection(){

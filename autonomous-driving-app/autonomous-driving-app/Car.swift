@@ -26,6 +26,8 @@ class Car {
         distance = [0,0,0,0,0,0,0,0]
         speed = [0,0,0,0]
         xyz = [0,0,0]
+        
+        print("new car created")
     }
 
     func writeSpeed(speed: [UInt8]){

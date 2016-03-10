@@ -16,6 +16,8 @@ class MainViewController: UIViewController {
     var car: Car!
     var dataSocket: DataSocket!
     var videoSocket: VideoSocket!
+    let dataPort: UInt16 = 3050
+    let videoPort: UInt16 = 3040
     
     @IBAction func enter(sender: AnyObject) {
         var ipv4 = ""
@@ -30,9 +32,14 @@ class MainViewController: UIViewController {
         let validIpAddressRegex = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
         
         if (ipv4.rangeOfString(validIpAddressRegex, options: .RegularExpressionSearch) != nil){
-            car = Car.init(ipv4: ipv4)
-            
             print("\(ipv4) is a valid IP address")
+            
+            car = Car.init(ipv4: ipv4)
+            dataSocket = DataSocket(car: car, localPort: dataPort)
+            videoSocket = VideoSocket(car: car, localPort: videoPort)
+            
+            dataSocket.handshake(videoPort, dataPort: dataPort)
+            
             self.performSegueWithIdentifier("nextScreen", sender: self)
         } else {
             print("Ip Address \(ipv4) is not valid.")

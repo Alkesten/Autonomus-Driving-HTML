@@ -18,6 +18,7 @@ class Socket: NSObject, GCDAsyncUdpSocketDelegate{
     init(car: Car, localPort: UInt16){
         self.car = car
         self.localPort = localPort
+        print("new Socket created")
     }
     
     func convertUInt16ToUInt8(uInt16Value: UInt16) -> [UInt8]{
