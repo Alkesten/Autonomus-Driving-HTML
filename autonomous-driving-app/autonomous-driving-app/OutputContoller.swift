@@ -9,6 +9,7 @@
 import UIKit
 
 class OutputController: UIViewController {
+    
     @IBOutlet weak var requestButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     
