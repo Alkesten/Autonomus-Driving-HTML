@@ -585,6 +585,26 @@
             </objects>
             <point key="canvasLocation" x="750" y="330"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="F2U-fs-oc1">
+            <objects>
+                <viewController id="erh-xa-qCI" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2fY-Dv-fE3"/>
+                        <viewControllerLayoutGuide type="bottom" id="E1p-Ms-zQJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Vam-4B-ij4">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" systemItem="more" id="qvo-F9-Ycq"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GY6-br-QCa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="0.0" y="989"/>
+        </scene>
         <!--Output-->
         <scene sceneID="ihj-s3-0he">
             <objects>
@@ -867,6 +887,7 @@
                         <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
                         <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
                         <segue destination="5bc-BJ-bGf" kind="relationship" relationship="viewControllers" id="QDD-sz-vCT"/>
+                        <segue destination="erh-xa-qCI" kind="relationship" relationship="viewControllers" id="PUa-zc-Fzg"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
