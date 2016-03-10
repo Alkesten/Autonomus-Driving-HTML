@@ -11,15 +11,28 @@ import CocoaAsyncSocket
 
 class VideoSocket: Socket {
     
+    //var video: Video
+    
     override init(car: Car, localPort: UInt16) {
         super.init(car: car, localPort: localPort)
+        //self.video = Video()
+        setupConnection()
     }
     
     func setupConnection(){
-        var error : NSError?
         udpSocket = GCDAsyncUdpSocket(delegate: self, delegateQueue: dispatch_get_main_queue())
-        udpSocket.bindToPort(localPort, error: &error)
-        udpSocket.beginReceiving(&error)
+        do {
+            try udpSocket.bindToPort(localPort)
+        } catch let err as NSError {
+            err.description
+        }
+        do {
+            try udpSocket.beginReceiving()
+        } catch let err as NSError {
+            err.description
+        }
         super.sendString("VideoSocketEstablished")
     }
+    
+    
 }

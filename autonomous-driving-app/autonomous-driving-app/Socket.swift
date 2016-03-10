@@ -12,7 +12,7 @@ import CocoaAsyncSocket
 class Socket: NSObject, GCDAsyncUdpSocketDelegate{
     
     var udpSocket: GCDAsyncUdpSocket!
-    var car: Car
+    let car: Car
     let localPort: UInt16
     
     init(car: Car, localPort: UInt16){
@@ -28,10 +28,10 @@ class Socket: NSObject, GCDAsyncUdpSocketDelegate{
         
         return byte
     }
-    
+       
     func udpSocket(sock : GCDAsyncUdpSocket!, didReceiveData data : NSData!,  fromAddress address : NSData!,  withFilterContext filterContext : AnyObject!) {
-        print(data)
-        car.processRxData(data)
+        print("Received: \(data)")
+        processRxData(data)
     }
     
     func udpSocket(sock: GCDAsyncUdpSocket!, didConnectToAddress address: NSData!) {
@@ -48,6 +48,32 @@ class Socket: NSObject, GCDAsyncUdpSocketDelegate{
     
     func udpSocket(sock: GCDAsyncUdpSocket!, didNotSendDataWithTag tag: Int, dueToError error: NSError!) {
         print("didNotSendDataWithTag")
+    }
+    
+    func processRxData(data: NSData){
+        let pointer = UnsafePointer<UInt8>(data.bytes)
+        let count = data.length
+        
+        let buffer = UnsafeBufferPointer<UInt8>(start:pointer, count:count)
+        let array = [UInt8](buffer)
+        var payload = array
+        payload.removeFirst()
+        
+        let id: UInt8 = buffer[0]
+        
+        switch id {
+        case 11:
+            car.writeSpeed(payload)
+        case 12:
+            car.writeGyroscope(payload)
+        case 13:
+            car.writeDistance(payload)
+        case 14:
+            //TODO
+            break
+        default:
+            break
+        }
     }
     
     func sendString(message: String){
