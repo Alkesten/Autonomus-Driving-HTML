@@ -348,7 +348,7 @@
                                                     <color key="titleShadowColor" red="0.138403675" green="1" blue="0.33110513629999999" alpha="0.0" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="stop:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="Rmv-zO-8fZ"/>
+                                                    <action selector="emergencyStop:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="1h6-xn-1jI"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -441,6 +441,9 @@
                                         <state key="normal" title="Forward">
                                             <color key="titleColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="forward:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="9vU-Si-rJD"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g2n-JX-FSa">
                                         <rect key="frame" x="8" y="41" width="544" height="33"/>
@@ -453,6 +456,9 @@
                                         <state key="normal" title="Backward">
                                             <color key="titleColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="backward:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="XyR-hr-aIC"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sfX-ur-e2q">
                                         <rect key="frame" x="8" y="82" width="544" height="33"/>
@@ -465,6 +471,9 @@
                                         <state key="normal" title="Turn Left">
                                             <color key="titleColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="left:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="RqK-sH-Y9D"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kBB-UD-G5x">
                                         <rect key="frame" x="8" y="123" width="544" height="33"/>
@@ -477,6 +486,9 @@
                                         <state key="normal" title="Turn Right">
                                             <color key="titleColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="right:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="1WH-GA-h6x"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wp1-6H-dwZ">
                                         <rect key="frame" x="8" y="164" width="544" height="33"/>
@@ -489,6 +501,9 @@
                                         <state key="normal" title="Park">
                                             <color key="titleColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="park:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="Y83-PO-jTe"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MXD-wN-N5N">
                                         <rect key="frame" x="8" y="205" width="544" height="33"/>
@@ -501,6 +516,9 @@
                                         <state key="normal" title="Stop">
                                             <color key="titleColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="stop:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="zWJ-Jl-W1P"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <animations/>
