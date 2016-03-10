@@ -10,15 +10,11 @@ import Foundation
 import CocoaAsyncSocket
 
 class VideoSocket: Socket {
-    
-    var video: Video
-    
-    override init(car: Car, localPort: UInt16) {
-        super.init(car: car, localPort: localPort)
-        self.video = Video()
+    override init(car: Car, video: Video, localPort: UInt16) {
+        super.init(car: car, video: video, localPort: localPort)
         setupConnection()
     }
-    
+
     func setupConnection(){
         udpSocket = GCDAsyncUdpSocket(delegate: self, delegateQueue: dispatch_get_main_queue())
         do {
@@ -44,6 +40,14 @@ class VideoSocket: Socket {
         }
     }
     
+    /*
+      when calling function:
+      do {
+        extractByte(data)
+      } catch VideoError.NonVideoData {
+        print("Received non video data on video port")
+      }
+    */
     func extractByte(data: NSData) throws -> [UInt8]{
         let pointer = UnsafePointer<UInt8>(data.bytes)
         let count = data.length
@@ -55,13 +59,14 @@ class VideoSocket: Socket {
         
         let id: UInt8 = buffer[0]
         
-        if(id != 14){
-            print("received non video data on video port")
-            let error: ErrorType = err
-            throw error
+        guard id != 14 else {
+            throw VideoError.NonVideoData
         }
-        
+
         return payload
     }
-    
+}
+
+enum VideoError : ErrorType {
+    case NonVideoData
 }

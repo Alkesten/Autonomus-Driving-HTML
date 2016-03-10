@@ -11,9 +11,8 @@ import CocoaAsyncSocket
 
 
 class DataSocket: Socket {
-    
-    override init(car: Car, localPort: UInt16) {
-        super.init(car: car, localPort: localPort)
+    override init(car: Car, video: Video, localPort: UInt16) {
+        super.init(car: car, video: video, localPort: localPort)
         setupConnection()
     }
 

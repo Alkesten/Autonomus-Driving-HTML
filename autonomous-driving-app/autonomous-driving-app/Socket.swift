@@ -13,10 +13,12 @@ class Socket: NSObject, GCDAsyncUdpSocketDelegate{
     
     var udpSocket: GCDAsyncUdpSocket!
     let car: Car
+    let video: Video
     let localPort: UInt16
     
-    init(car: Car, localPort: UInt16){
+    init(car: Car, video: Video, localPort: UInt16){
         self.car = car
+        self.video = video
         self.localPort = localPort
     }
     
