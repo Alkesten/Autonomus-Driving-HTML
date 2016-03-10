@@ -598,7 +598,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="eZC-nt-adh">
-                                <rect key="frame" x="20" y="187" width="560" height="347"/>
+                                <rect key="frame" x="20" y="187" width="560" height="342"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="0.75" colorSpace="calibratedRGB"/>
@@ -732,7 +732,7 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="yl7-dw-k7z" firstAttribute="top" secondItem="eZC-nt-adh" secondAttribute="bottom" constant="17" id="A6D-lA-PKB"/>
+                            <constraint firstItem="yl7-dw-k7z" firstAttribute="top" secondItem="eZC-nt-adh" secondAttribute="bottom" constant="22" id="A6D-lA-PKB"/>
                             <constraint firstItem="eZC-nt-adh" firstAttribute="trailing" secondItem="XmZ-p7-yG5" secondAttribute="trailingMargin" id="Dgk-TP-a9e"/>
                             <constraint firstItem="S8h-6x-7fK" firstAttribute="top" secondItem="XmZ-p7-yG5" secondAttribute="topMargin" constant="12" id="IRh-Wh-oKz"/>
                             <constraint firstItem="eZC-nt-adh" firstAttribute="top" secondItem="8tU-s1-HI3" secondAttribute="bottom" id="LIO-Zq-Ylm"/>
