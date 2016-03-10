@@ -9,6 +9,7 @@
 import Foundation
 
 class Car {
+    
     let port: UInt16
     let ipv4: String
     
@@ -25,6 +26,8 @@ class Car {
         distance = [0,0,0,0,0,0,0,0]
         speed = [0,0,0,0]
         xyz = [0,0,0]
+        
+        print("new car created")
     }
 
     func writeSpeed(speed: [UInt8]){

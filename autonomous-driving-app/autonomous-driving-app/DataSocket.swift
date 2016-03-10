@@ -11,9 +11,11 @@ import CocoaAsyncSocket
 
 
 class DataSocket: Socket {
-    override init(car: Car, video: Video, localPort: UInt16) {
-        super.init(car: car, video: video, localPort: localPort)
+    
+    override init(car: Car, localPort: UInt16) {
+        super.init(car: car, localPort: localPort)
         setupConnection()
+        print("new DataSocket created")
     }
 
     func setupConnection(){
@@ -46,6 +48,8 @@ class DataSocket: Socket {
         let buffer: [UInt8] = [20] + dataPortA + videoPortA
         
         sendStream(buffer)
+        
+        print("sent handshake dataPort: \(dataPort) , videoPort: \(videoPort)")
     }
     
     func sendStream(byteArray: [UInt8]){
