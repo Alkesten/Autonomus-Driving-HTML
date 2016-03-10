@@ -59,7 +59,7 @@ class VideoSocket: Socket {
         
         let id: UInt8 = buffer[0]
         
-        guard id != 14 else {
+        guard id == 14 else {
             throw VideoError.NonVideoData
         }
 
