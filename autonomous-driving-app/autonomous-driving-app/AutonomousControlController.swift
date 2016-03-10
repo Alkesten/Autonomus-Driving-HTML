@@ -9,16 +9,27 @@
 import UIKit
 
 class AutonomousControlController: UIViewController {
-
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var actionOptions: UIView!
+    var active = false
     
     @IBAction func addAction(sender: AnyObject) {
-    
+        if active == false {
+            active = true
+            addButton.setImage(UIImage(named: "remove.png"), forState: .Normal)
+            actionOptions.hidden = false
+        } else {
+            active = false
+            addButton.setImage(UIImage(named: "add.png"), forState: .Normal)
+            actionOptions.hidden = true
+        }
+        
     }
     
     @IBAction func start(sender: AnyObject) {
+        
     
     }
     
@@ -30,6 +41,7 @@ class AutonomousControlController: UIViewController {
         startButton.layer.cornerRadius = 37.5
         stopButton.layer.cornerRadius = 37.5
         addButton.layer.cornerRadius = 16
+        actionOptions.hidden = true
     }
     
     override func viewDidLoad() {

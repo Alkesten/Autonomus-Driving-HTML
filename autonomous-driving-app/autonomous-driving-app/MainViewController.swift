@@ -12,7 +12,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var IPAddress: UITextField!
     @IBOutlet weak var enterButton: UIButton!
     @IBOutlet weak var warningLabel: UILabel!
-    
+
     var car: Car!
     var dataSocket: DataSocket!
     var videoSocket: VideoSocket!
@@ -39,9 +39,17 @@ class MainViewController: UIViewController {
             warningLabel.text = "PLEASE USE FORMAT 123.45.67.89"
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        intialize()
+    }
+    
+    func intialize() {
+        IPAddress.textRectForBounds(CGRectInset(IPAddress.bounds, 0, 0))
+        IPAddress.editingRectForBounds(CGRectInset(IPAddress.bounds, 0, 0))
         warningLabel.text = ""
+        
     }
     
     override func didReceiveMemoryWarning() {
