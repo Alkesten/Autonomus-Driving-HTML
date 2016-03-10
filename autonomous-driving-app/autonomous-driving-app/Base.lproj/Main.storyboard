@@ -630,8 +630,25 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7h2-jk-g3z">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IP Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aNh-74-IEi">
+                                        <rect key="frame" x="20" y="171" width="560" height="40"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="8Ed-qn-eec"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="33"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KSn-hK-urw">
+                                        <rect key="frame" x="20" y="219" width="560" height="29"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="0.87032199848024316" green="0.76139817629179318" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sYw-Xi-SdI">
-                                        <rect key="frame" x="20" y="273" width="560" height="43"/>
+                                        <rect key="frame" x="20" y="305" width="560" height="43"/>
                                         <animations/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -645,7 +662,7 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6nQ-W9-zB6">
-                                        <rect key="frame" x="20" y="219" width="560" height="39"/>
+                                        <rect key="frame" x="20" y="251" width="560" height="39"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="0.52525240384615379" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -655,21 +672,11 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IP Address" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aNh-74-IEi">
-                                        <rect key="frame" x="20" y="171" width="560" height="40"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="8Ed-qn-eec"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="33"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="6nQ-W9-zB6" firstAttribute="top" secondItem="aNh-74-IEi" secondAttribute="bottom" constant="8" id="4VO-sl-4Ig"/>
+                                    <constraint firstItem="6nQ-W9-zB6" firstAttribute="top" secondItem="aNh-74-IEi" secondAttribute="bottom" constant="40" id="4VO-sl-4Ig"/>
                                     <constraint firstAttribute="trailing" secondItem="6nQ-W9-zB6" secondAttribute="trailing" constant="20" id="Lqm-5Y-WFH"/>
                                     <constraint firstItem="aNh-74-IEi" firstAttribute="leading" secondItem="7h2-jk-g3z" secondAttribute="leading" constant="20" id="MPA-61-niV"/>
                                     <constraint firstItem="aNh-74-IEi" firstAttribute="top" secondItem="7h2-jk-g3z" secondAttribute="top" constant="171" id="Sz8-Lm-gNj"/>
@@ -694,6 +701,7 @@
                     <connections>
                         <outlet property="IPAddress" destination="6nQ-W9-zB6" id="GOw-l5-5WE"/>
                         <outlet property="enterButton" destination="sYw-Xi-SdI" id="SD3-rI-2VP"/>
+                        <outlet property="warningLabel" destination="KSn-hK-urw" id="XTj-if-8Y5"/>
                         <segue destination="49e-Tb-3d3" kind="show" identifier="nextScreen" id="c0M-MN-RMw"/>
                     </connections>
                 </viewController>
