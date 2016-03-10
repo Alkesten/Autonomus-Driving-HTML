@@ -517,6 +517,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				IBSC_ERRORS = YES;
+				IBSC_NOTICES = YES;
+				IBSC_WARNINGS = NO;
 				INFOPLIST_FILE = "autonomous-driving-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tum.autonomous-driving-app.autonomous-driving-app";
@@ -532,6 +535,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				IBSC_ERRORS = YES;
+				IBSC_NOTICES = YES;
+				IBSC_WARNINGS = NO;
 				INFOPLIST_FILE = "autonomous-driving-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tum.autonomous-driving-app.autonomous-driving-app";
