@@ -24,10 +24,6 @@ class VideoSocket: Socket {
         udpSocket = GCDAsyncUdpSocket(delegate: self, delegateQueue: dispatch_get_main_queue())
         do {
             try udpSocket.bindToPort(localPort)
-        } catch let err as NSError {
-            err.description
-        }
-        do {
             try udpSocket.beginReceiving()
         } catch let err as NSError {
             err.description

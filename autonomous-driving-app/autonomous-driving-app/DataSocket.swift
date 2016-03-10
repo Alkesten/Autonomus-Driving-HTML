@@ -23,17 +23,7 @@ class DataSocket: Socket {
         
         do {
             try udpSocket.bindToPort(localPort)
-        } catch let err as NSError {
-            err.description
-        }
-        
-        do {
             try udpSocket.connectToHost(car.ipv4, onPort: car.port)
-        } catch let err as NSError {
-            err.description
-        }
-        
-        do {
             try udpSocket.beginReceiving()
         } catch let err as NSError {
             err.description
