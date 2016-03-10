@@ -16,8 +16,8 @@ class MainViewController: UIViewController {
     var car: Car!
     var dataSocket: DataSocket!
     var videoSocket: VideoSocket!
-    let dataPort: UInt16 = 3050
-    let videoPort: UInt16 = 3040
+    let dataPort: UInt16 = 3040
+    let videoPort: UInt16 = 3050
     
     @IBAction func enter(sender: AnyObject) {
         var ipv4 = ""
