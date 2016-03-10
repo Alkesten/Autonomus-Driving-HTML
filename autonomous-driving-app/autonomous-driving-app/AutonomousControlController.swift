@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AutonomousControlController: UIViewController, UITableViewDataSource, UITableViewDelegate{
+class AutonomousControlController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var addButton: UIButton!
@@ -87,7 +87,7 @@ class AutonomousControlController: UIViewController, UITableViewDataSource, UITa
         startButton.layer.cornerRadius = 37.5
         stopButton.layer.cornerRadius = 37.5
         addButton.layer.cornerRadius = 16
-        actionOptions.hidden = true
+        hideMenu()
     }
     
     override func viewDidLoad() {
@@ -96,7 +96,6 @@ class AutonomousControlController: UIViewController, UITableViewDataSource, UITa
         actions.delegate = self
         actions.dataSource = self
         actions.tableFooterView = UIView()
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -131,12 +130,9 @@ class AutonomousControlController: UIViewController, UITableViewDataSource, UITa
             updateValues()
         }
     }
-
     
     func updateValues() {
         actions.reloadData()
     }
-    
-
 }
 
