@@ -28,7 +28,7 @@ class MainViewController: UIViewController {
         let validIpAddressRegex = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
         
         if (ipv4.rangeOfString(validIpAddressRegex, options: .RegularExpressionSearch) != nil){
-            print("\n\n \(ipv4) is a valid IP address\n\n")
+            print("\(ipv4) is a valid IP address")
             car = Car.init(ipv4: ipv4)
             self.performSegueWithIdentifier("nextScreen", sender: self)
         } else {
