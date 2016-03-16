@@ -14,15 +14,20 @@ class OutputController: UIViewController, UITableViewDataSource, UITableViewDele
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var outputTable: UITableView!
     
+    let shared = ShareData.sharedInstance
+    
     //need to put actual data where the dummy data is
     var outputData: [(String, Double)] = [("Speed",123.45),("Gyroscope",123.55),("Distance",123.35)]
     
     @IBAction func request(sender: AnyObject) {
-        
+        print("pressed request")
+        shared.remoteControl.requestData(true, gyroscope: true, distance: true, video: false)
     }
     
     @IBAction func stop(sender: AnyObject) {
-        
+        print("pressed stop")
+        shared.remoteControl.setStop()
+        //shared.remoteControl.requestData(false, gyroscope: false, distance: false, video: false)
     }
     
     func setup() {

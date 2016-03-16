@@ -15,6 +15,7 @@ class AutonomousControlController: UIViewController, UITableViewDataSource, UITa
     @IBOutlet weak var actionOptions: UIView!
     @IBOutlet weak var actions: UITableView!
     
+    let shared = ShareData.sharedInstance
     var actionsArray: [String] = []
     var active = false
 
@@ -30,37 +31,45 @@ class AutonomousControlController: UIViewController, UITableViewDataSource, UITa
         actionOptions.hidden = true
     }
     
+    //instructions: range between 0 and 4: 0 = turn left, 1 = go straight, 2 = turn right, park = 3, stop = 4
     @IBAction func forward(sender: AnyObject) {
+        shared.remoteControl.buildInstruction(1)
         hideMenu()
         actionsArray.append("Forward")
         updateValues()
     }
     
     @IBAction func backward(sender: AnyObject) {
+        //not implemented!
+        shared.remoteControl.buildInstruction(5)
         hideMenu()
         actionsArray.append("Backward")
         updateValues()
     }
     
     @IBAction func left(sender: AnyObject) {
+        shared.remoteControl.buildInstruction(0)
         hideMenu()
         actionsArray.append("Turn Left")
         updateValues()
     }
     
     @IBAction func right(sender: AnyObject) {
+        shared.remoteControl.buildInstruction(2)
         hideMenu()
         actionsArray.append("Turn Right")
         updateValues()
     }
     
     @IBAction func park(sender: AnyObject) {
+        shared.remoteControl.buildInstruction(3)
         hideMenu()
         actionsArray.append("Park")
         updateValues()
     }
     
     @IBAction func stop(sender: AnyObject) {
+        shared.remoteControl.buildInstruction(4)
         hideMenu()
         actionsArray.append("Stop")
         updateValues()
@@ -75,12 +84,13 @@ class AutonomousControlController: UIViewController, UITableViewDataSource, UITa
     }
     
     @IBAction func start(sender: AnyObject) {
-        
-    
+        print("pressed start")
+        shared.remoteControl.setTour()
     }
     
     @IBAction func emergencyStop(sender: AnyObject) {
-    
+        print("pressed stop")
+        shared.remoteControl.setStop()
     }
 
     func setup() {

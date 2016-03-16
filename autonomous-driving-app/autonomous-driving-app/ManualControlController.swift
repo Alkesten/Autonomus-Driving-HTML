@@ -17,28 +17,53 @@ class ManualControlController: UIViewController {
     @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var downButton: UIButton!
     
+    let share = ShareData.sharedInstance
+    var run: Bool = false
+    var speed: UInt8 = 0
+    
     @IBAction func start(sender: AnyObject) {
-        
+        print("pressed start")
+        run = true
     }
     
     @IBAction func stop(sender: AnyObject) {
-        
+        print("pressed stop")
+        run = false
+        setSpeed()
+        share.remoteControl.setSpeedDirection(speed, direction: 50)
+        share.remoteControl.setStop()
     }
 
     @IBAction func up(sender: AnyObject) {
-        
+        print("pressed up")
+        setSpeed()
+        share.remoteControl.setSpeedDirection(speed, direction: 50)
     }
     
     @IBAction func left(sender: AnyObject) {
-        
+        print("pressed left")
+        setSpeed()
+        share.remoteControl.setSpeedDirection(speed, direction: 0)
     }
     
     @IBAction func right(sender: AnyObject) {
-        
+        print("pressed right")
+        setSpeed()
+        share.remoteControl.setSpeedDirection(speed, direction: 100)
     }
     
     @IBAction func down(sender: AnyObject) {
-        
+        print("pressed down")
+        speed = 201
+        share.remoteControl.setSpeedDirection(speed, direction: 50)
+    }
+    
+    func setSpeed(){
+        if run {
+            speed = 100
+        } else {
+            speed = 0
+        }
     }
 
     func setUp() {

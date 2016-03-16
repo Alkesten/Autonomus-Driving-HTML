@@ -24,6 +24,7 @@
 		8EBDE1551C9061F200784223 /* RemoteControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBDE1541C9061F200784223 /* RemoteControl.swift */; };
 		8EF7DA8A1C89B08900CB7AAC /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF7DA891C89B08900CB7AAC /* Socket.swift */; };
 		B3167EA61C91ADC20035A0C0 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3167EA51C91ADC20035A0C0 /* Video.swift */; };
+		B36FC5FB1C99DBDF00FAFE83 /* ShareData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36FC5FA1C99DBDF00FAFE83 /* ShareData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		8EBDE1541C9061F200784223 /* RemoteControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteControl.swift; sourceTree = "<group>"; };
 		8EF7DA891C89B08900CB7AAC /* Socket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Socket.swift; sourceTree = "<group>"; };
 		B3167EA51C91ADC20035A0C0 /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		B36FC5FA1C99DBDF00FAFE83 /* ShareData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareData.swift; sourceTree = "<group>"; };
 		E98F9F51D9EB07A449DFA34E /* Pods-autonomous-driving-app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-autonomous-driving-app.debug.xcconfig"; path = "Pods/Target Support Files/Pods-autonomous-driving-app/Pods-autonomous-driving-app.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -129,6 +131,7 @@
 				01773B1F1C80B9120063339C /* OutputContoller.swift */,
 				01773AF11C80A3960063339C /* Main.storyboard */,
 				01001CF71C8266C300E14760 /* MainViewController.swift */,
+				B36FC5FA1C99DBDF00FAFE83 /* ShareData.swift */,
 				01773AF41C80A3960063339C /* Assets.xcassets */,
 				01773AF61C80A3960063339C /* LaunchScreen.storyboard */,
 				01773AF91C80A3960063339C /* Info.plist */,
@@ -374,6 +377,7 @@
 				8E9ED3241C89EBA3004FDA09 /* Car.swift in Sources */,
 				8EBDE1511C9061D600784223 /* DataSocket.swift in Sources */,
 				01001CF81C8266C300E14760 /* MainViewController.swift in Sources */,
+				B36FC5FB1C99DBDF00FAFE83 /* ShareData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

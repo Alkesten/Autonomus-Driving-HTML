@@ -29,6 +29,11 @@ class Socket: NSObject, GCDAsyncUdpSocketDelegate{
         
         return byte
     }
+    
+    func convertUInt8ToUInt8(uInt8Value: [UInt8]) -> UInt16{
+        let u16 = UnsafePointer<UInt16>(uInt8Value).memory
+        return u16.bigEndian
+    }
        
     func udpSocket(sock : GCDAsyncUdpSocket!, didReceiveData data : NSData!,  fromAddress address : NSData!,  withFilterContext filterContext : AnyObject!) {
         print("Received: \(data)")
@@ -36,19 +41,19 @@ class Socket: NSObject, GCDAsyncUdpSocketDelegate{
     }
     
     func udpSocket(sock: GCDAsyncUdpSocket!, didConnectToAddress address: NSData!) {
-        print("didConnectToAddress")
+        //print("didConnectToAddress")
     }
     
     func udpSocket(sock: GCDAsyncUdpSocket!, didNotConnect error: NSError!) {
-        print("didNotConnect \(error)")
+        //print("didNotConnect \(error)")
     }
     
     func udpSocket(sock: GCDAsyncUdpSocket!, didSendDataWithTag tag: Int) {
-        print("didSendDataWithTag")
+        //print("didSendDataWithTag")
     }
     
     func udpSocket(sock: GCDAsyncUdpSocket!, didNotSendDataWithTag tag: Int, dueToError error: NSError!) {
-        print("didNotSendDataWithTag")
+        //print("didNotSendDataWithTag")
     }
     
     func processRxData(data: NSData){
@@ -64,15 +69,26 @@ class Socket: NSObject, GCDAsyncUdpSocketDelegate{
         
         switch id {
         case 11:
+            print("ID 11 = Speed")
             car.writeSpeed(payload)
         case 12:
+            print("ID 12 = Gyroscope")
             car.writeGyroscope(payload)
         case 13:
-            car.writeDistance(payload)
+            print("ID 13 = Distance")
+            var payloadUInt16: [UInt16] = []
+            
+            for var i = 0; i < payload.count; i = i + 2 {
+                payloadUInt16.append(convertUInt8ToUInt8([payload[i], payload[i+1]]))
+            }
+                
+            car.writeDistance(payloadUInt16)
         case 14:
+            print("ID 14 = Video")
             //TODO
             break
         default:
+            print("ID \(id) = Unknown!")
             break
         }
     }

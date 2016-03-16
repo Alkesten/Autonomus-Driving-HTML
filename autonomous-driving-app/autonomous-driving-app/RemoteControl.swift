@@ -23,20 +23,24 @@ class RemoteControl {
     func setSpeedDirection(speed: UInt8, direction: UInt8){
         let bytes: [UInt8] = [21, speed, direction]
         transmit(bytes)
+        print("sent speed/direction")
     }
     
     func setStop(){
         let bytes: [UInt8] = [22]
         transmit(bytes)
+        print("sent stop")
     }
     
     func buildInstruction(cmd: UInt8){
         instructions.append(cmd)
+        print("add instruction")
     }
     
     func setTour(){
         instructions.insert(24, atIndex: 0)
         transmit(instructions)
+        print("set tour send sent")
     }
     
     func requestData(speed: Bool, gyroscope: Bool, distance: Bool, video: Bool){
@@ -59,6 +63,7 @@ class RemoteControl {
         let buffer: [UInt8] = [id, request]
         
         transmit(buffer)
+        print("sent request")
     }
     
     func transmit(bytes: [UInt8]){

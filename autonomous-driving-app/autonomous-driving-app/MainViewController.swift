@@ -12,14 +12,11 @@ class MainViewController: UIViewController {
     @IBOutlet weak var IPAddress: UITextField!
     @IBOutlet weak var enterButton: UIButton!
     @IBOutlet weak var warningLabel: UILabel!
-
-    var car: Car!
-    var dataSocket: DataSocket!
-    var videoSocket: VideoSocket!
-    let dataPort: UInt16 = 3040
-    let videoPort: UInt16 = 3050
+    
+    let shared = ShareData.sharedInstance
     
     @IBAction func enter(sender: AnyObject) {
+        print("pressed enter")
         var ipv4 = ""
         
         if let ip = IPAddress.text {
@@ -34,11 +31,12 @@ class MainViewController: UIViewController {
         if (ipv4.rangeOfString(validIpAddressRegex, options: .RegularExpressionSearch) != nil){
             print("\(ipv4) is a valid IP address")
             
-            car = Car.init(ipv4: ipv4)
-            dataSocket = DataSocket(car: car, localPort: dataPort)
-            videoSocket = VideoSocket(car: car, localPort: videoPort)
+            ShareData.sharedInstance.car = Car.init(ipv4: ipv4)
+            shared.dataSocket = DataSocket(car: shared.car, localPort: shared.dataPort)
+            shared.videoSocket = VideoSocket(car: shared.car, localPort: shared.videoPort)
             
-            dataSocket.handshake(videoPort, dataPort: dataPort)
+            shared.dataSocket.handshake(shared.videoPort, dataPort: shared.dataPort)
+            shared.remoteControl = RemoteControl(dataSocket: shared.dataSocket, car: shared.car)
             
             self.performSegueWithIdentifier("nextScreen", sender: self)
         } else {
