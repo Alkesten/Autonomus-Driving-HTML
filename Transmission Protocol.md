@@ -41,7 +41,8 @@ __All transmissions are send as UDP packets__. The payload has to start with the
 
 * __distance__
 	* id: 13 (`0x0D`)
-	* values: 1 char + 8 UInt16: id + d1 + d2 + d3 + d4 + d5 + d6 + d7 + d8
+	* values: 17 char: id + d1 + d2 + d3 + d4 + d5 + d6 + d7 + d8
+		* d1-8: 8 * (2 byte = UInt16 Big Endian)
 		* d1-8: clockwise 1-8 d1 = front left, d2 = front straight, d3 = front right, d4 = right side ...
 		* <i>values are rounded down to char</i>
 
@@ -52,7 +53,7 @@ __All transmissions are send as UDP packets__. The payload has to start with the
 		* block (1 byte): to idetify the image fragment 0-29 
 		* image fragment (1.280 byte): (total image: 640x480 = 307.200 bit) split up in 30 parts = 307.200 bit / 30 = 10.240 bit = 1.280 byte per image fragment
 
-* current instruction
+* __current instruction__
 	* id: 15 (`0x0F`)
 	* values: 2 + [length of instruction array] char: id + length + array of instructions
 		* length (1 byte): length of instruction array
