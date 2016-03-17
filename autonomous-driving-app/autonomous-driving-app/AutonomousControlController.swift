@@ -98,6 +98,7 @@ class AutonomousControlController: UIViewController, UITableViewDataSource, UITa
         actions.delegate = self
         actions.dataSource = self
         actions.tableFooterView = UIView()
+        ShareData.sharedInstance.remoteControl.requestData(false, gyroscope: false, distance: false, video: false)
     }
 
     override func didReceiveMemoryWarning() {
