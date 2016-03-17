@@ -39,13 +39,6 @@ class AutonomousControlController: UIViewController, UITableViewDataSource, UITa
         updateValues()
     }
     
-    @IBAction func backward(sender: AnyObject) {
-        shared.remoteControl.buildInstruction(5)    ////adds the command to the tour list - not implemeted!
-        hideMenu()
-        actionsArray.append("Backward")
-        updateValues()
-    }
-    
     @IBAction func left(sender: AnyObject) {
         shared.remoteControl.buildInstruction(0)    //adds the command to the tour list
         hideMenu()
