@@ -84,6 +84,11 @@ class ManualControlController: UIViewController {
         setUp()
         ShareData.sharedInstance.remoteControl.requestData(false, gyroscope: false, distance: false, video: false)
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        ShareData.sharedInstance.remoteControl.requestData(false, gyroscope: false, distance: false, video: false)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

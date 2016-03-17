@@ -8,16 +8,31 @@
 
 import UIKit
 
-class OutputController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class OutputController: UIViewController {
     
     @IBOutlet weak var requestButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var outputTable: UITableView!
     
-    let shared = ShareData.sharedInstance
+    @IBOutlet weak var frontTire: UILabel!
+    @IBOutlet weak var leftTire: UILabel!
+    @IBOutlet weak var rightTire: UILabel!
+    @IBOutlet weak var backTire: UILabel!
     
-    //need to put actual data where the dummy data is
-    var outputData: [(String, Double)] = [("Speed",123.45),("Gyroscope",123.55),("Distance",123.35)]
+    @IBOutlet weak var frontDistance: UILabel!
+    @IBOutlet weak var backDistance: UILabel!
+    @IBOutlet weak var frontLeftDistance: UILabel!
+    @IBOutlet weak var backLeftDistance: UILabel!
+    @IBOutlet weak var frontRightDistance: UILabel!
+    @IBOutlet weak var backRightDistance: UILabel!
+    @IBOutlet weak var leftDistance: UILabel!
+    @IBOutlet weak var rightDistance: UILabel!
+    
+    @IBOutlet weak var xGyroscope: UILabel!
+    @IBOutlet weak var yGyroscope: UILabel!
+    @IBOutlet weak var zGyroscope: UILabel!
+    
+    let shared = ShareData.sharedInstance
     
     @IBAction func request(sender: AnyObject) {
         debugPrint("pressed request")
@@ -32,14 +47,14 @@ class OutputController: UIViewController, UITableViewDataSource, UITableViewDele
     func setup() {
         requestButton.layer.cornerRadius = 37.5
         stopButton.layer.cornerRadius = 37.5
+        updateValues()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        outputTable.delegate = self
-        outputTable.dataSource = self
-        outputTable.tableFooterView = UIView()
+        let timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("updateValues"), userInfo: nil, repeats: true)
+        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
     }
     
     override func didReceiveMemoryWarning() {
@@ -47,32 +62,30 @@ class OutputController: UIViewController, UITableViewDataSource, UITableViewDele
         // Dispose of any resources that can be recreated.
     }
 
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return outputData[section].0
-    }
-
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return outputData.count
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellData = outputData[indexPath.section].1
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier("outputCell", forIndexPath: indexPath)
-        cell.textLabel?.text = "\(cellData)"
-        cell.textLabel?.textColor = UIColor(red: 230, green: 230, blue: 230, alpha: 1)
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    
     func updateValues() {
-        outputTable.reloadData()
+        dispatch_async(dispatch_get_main_queue(), {
+            self.frontTire.text = "\(ShareData.sharedInstance.car.speed[0].0): \(Double(ShareData.sharedInstance.car.speed[0].1))"
+            self.leftTire.text = "\(ShareData.sharedInstance.car.speed[1].0): \(Double(ShareData.sharedInstance.car.speed[1].1))"
+            self.rightTire.text = "\(ShareData.sharedInstance.car.speed[2].0): \(Double(ShareData.sharedInstance.car.speed[2].1))"
+            self.backTire.text = "\(ShareData.sharedInstance.car.speed[3].0): \(Double(ShareData.sharedInstance.car.speed[3].1))"
+            
+            self.frontDistance.text = "\(ShareData.sharedInstance.car.distance[1].0): \(Double(ShareData.sharedInstance.car.distance[1].1))"
+            self.backDistance.text = "\(ShareData.sharedInstance.car.distance[5].0): \(Double(ShareData.sharedInstance.car.distance[5].1))"
+            self.frontLeftDistance.text = "\(ShareData.sharedInstance.car.distance[2].0): \(Double(ShareData.sharedInstance.car.distance[2].1))"
+            self.frontRightDistance.text = "\(ShareData.sharedInstance.car.distance[0].0): \(Double(ShareData.sharedInstance.car.distance[0].1))"
+            self.backLeftDistance.text = "\(ShareData.sharedInstance.car.distance[4].0): \(Double(ShareData.sharedInstance.car.distance[4].1))"
+            self.backRightDistance.text = "\(ShareData.sharedInstance.car.distance[6].0): \(Double(ShareData.sharedInstance.car.distance[6].1))"
+            self.leftDistance.text = "\(ShareData.sharedInstance.car.distance[7].0): \(Double(ShareData.sharedInstance.car.distance[7].1))"
+            self.rightDistance.text = "\(ShareData.sharedInstance.car.distance[3].0): \(Double(ShareData.sharedInstance.car.distance[3].1))"
+            
+            self.xGyroscope.text = "\(ShareData.sharedInstance.car.xyz[0].0): \(Double(ShareData.sharedInstance.car.xyz[0].1))"
+            self.yGyroscope.text = "\(ShareData.sharedInstance.car.xyz[1].0): \(Double(ShareData.sharedInstance.car.xyz[1].1))"
+            self.zGyroscope.text = "\(ShareData.sharedInstance.car.xyz[2].0): \(Double(ShareData.sharedInstance.car.xyz[2].1))"
+        })
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        updateValues()
     }
 }
