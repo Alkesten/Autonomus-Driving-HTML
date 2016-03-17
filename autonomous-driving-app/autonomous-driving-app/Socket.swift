@@ -79,6 +79,9 @@ class Socket: NSObject, GCDAsyncUdpSocketDelegate{
         case 14:
             debugPrint("ID 14 = Video")
             break //TODO
+        case 15:
+            debugPrint("ID 15 = Instruction")
+            shared.car.writeInstructions(payload) //saves received instructions without ID
         default:
             debugPrint("ID \(id) = Unknown!")
             break

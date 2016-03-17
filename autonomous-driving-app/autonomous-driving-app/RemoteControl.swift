@@ -35,6 +35,8 @@ class RemoteControl {
     
     //sends the builded instruction list (ID: 24)
     func setTour(){
+        ShareData.sharedInstance.car.writeInstructions(instructions)    //add instruction to car object
+        
         instructions.insert(24, atIndex: 0) //adds ID
         dataSocket.sendStream(instructions)
         debugPrint("set tour send sent \(instructions)")
