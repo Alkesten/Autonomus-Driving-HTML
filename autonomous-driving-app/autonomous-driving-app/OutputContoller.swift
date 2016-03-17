@@ -20,14 +20,13 @@ class OutputController: UIViewController, UITableViewDataSource, UITableViewDele
     var outputData: [(String, Double)] = [("Speed",123.45),("Gyroscope",123.55),("Distance",123.35)]
     
     @IBAction func request(sender: AnyObject) {
-        print("pressed request")
-        shared.remoteControl.requestData(true, gyroscope: true, distance: true, video: false)
+        debugPrint("pressed request")
+        shared.remoteControl.requestData(true, gyroscope: true, distance: true, video: false) //request all data except video
     }
     
     @IBAction func stop(sender: AnyObject) {
-        print("pressed stop")
-        shared.remoteControl.setStop()
-        //shared.remoteControl.requestData(false, gyroscope: false, distance: false, video: false)
+        debugPrint("pressed stop")
+        shared.remoteControl.setStop() //sends stop signal, still receive data for output
     }
     
     func setup() {
@@ -76,5 +75,4 @@ class OutputController: UIViewController, UITableViewDataSource, UITableViewDele
     func updateValues() {
         outputTable.reloadData()
     }
-    
 }

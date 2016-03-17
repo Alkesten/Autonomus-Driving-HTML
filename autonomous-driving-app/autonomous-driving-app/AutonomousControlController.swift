@@ -33,43 +33,42 @@ class AutonomousControlController: UIViewController, UITableViewDataSource, UITa
     
     //instructions: range between 0 and 4: 0 = turn left, 1 = go straight, 2 = turn right, park = 3, stop = 4
     @IBAction func forward(sender: AnyObject) {
-        shared.remoteControl.buildInstruction(1)
+        shared.remoteControl.buildInstruction(1) //adds the command to the tour list
         hideMenu()
         actionsArray.append("Forward")
         updateValues()
     }
     
     @IBAction func backward(sender: AnyObject) {
-        //not implemented!
-        shared.remoteControl.buildInstruction(5)
+        shared.remoteControl.buildInstruction(5)    ////adds the command to the tour list - not implemeted!
         hideMenu()
         actionsArray.append("Backward")
         updateValues()
     }
     
     @IBAction func left(sender: AnyObject) {
-        shared.remoteControl.buildInstruction(0)
+        shared.remoteControl.buildInstruction(0)    //adds the command to the tour list
         hideMenu()
         actionsArray.append("Turn Left")
         updateValues()
     }
     
     @IBAction func right(sender: AnyObject) {
-        shared.remoteControl.buildInstruction(2)
+        shared.remoteControl.buildInstruction(2)    //adds the command to the tour list
         hideMenu()
         actionsArray.append("Turn Right")
         updateValues()
     }
     
     @IBAction func park(sender: AnyObject) {
-        shared.remoteControl.buildInstruction(3)
+        shared.remoteControl.buildInstruction(3)    //adds the command to the tour list
         hideMenu()
         actionsArray.append("Park")
         updateValues()
     }
     
     @IBAction func stop(sender: AnyObject) {
-        shared.remoteControl.buildInstruction(4)
+        shared.remoteControl.buildInstruction(4)    //adds the command to the tour list
         hideMenu()
         actionsArray.append("Stop")
         updateValues()
@@ -84,13 +83,13 @@ class AutonomousControlController: UIViewController, UITableViewDataSource, UITa
     }
     
     @IBAction func start(sender: AnyObject) {
-        print("pressed start")
-        shared.remoteControl.setTour()
+        debugPrint("pressed start")
+        shared.remoteControl.setTour() //sends the builded tour
     }
     
     @IBAction func emergencyStop(sender: AnyObject) {
-        print("pressed stop")
-        shared.remoteControl.setStop()
+        debugPrint("pressed stop")
+        shared.remoteControl.setStop() //sends stop signal
     }
 
     func setup() {

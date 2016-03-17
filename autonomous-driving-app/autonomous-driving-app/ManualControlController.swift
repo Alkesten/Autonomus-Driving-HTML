@@ -17,47 +17,51 @@ class ManualControlController: UIViewController {
     @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var downButton: UIButton!
     
-    let share = ShareData.sharedInstance
-    var run: Bool = false
-    var speed: UInt8 = 0
+    let shared = ShareData.sharedInstance
+    var run: Bool = false //only if run is true speed will be set to 100 (except backward driving)
+    var speed: UInt8 = 0 //0 = no speed, 1-100 = forward, 101-200 backward
     
     @IBAction func start(sender: AnyObject) {
-        print("pressed start")
+        debugPrint("pressed start")
         run = true
     }
     
     @IBAction func stop(sender: AnyObject) {
-        print("pressed stop")
+        debugPrint("pressed stop")
         run = false
-        setSpeed()
-        share.remoteControl.setSpeedDirection(speed, direction: 50)
-        share.remoteControl.setStop()
+        setSpeed() //sets speed to 0 beacuse run = false
+        shared.remoteControl.setSpeedDirection(speed, direction: 50) //sends speed = 0
+        shared.remoteControl.setStop() //sends stop signal to car
     }
 
     @IBAction func up(sender: AnyObject) {
-        print("pressed up")
+        debugPrint("pressed up")
         setSpeed()
-        share.remoteControl.setSpeedDirection(speed, direction: 50)
+        shared.remoteControl.setSpeedDirection(speed, direction: 50) //50 is for straight
     }
     
     @IBAction func left(sender: AnyObject) {
-        print("pressed left")
+        debugPrint("pressed left")
         setSpeed()
-        share.remoteControl.setSpeedDirection(speed, direction: 0)
+        shared.remoteControl.setSpeedDirection(speed, direction: 0) //0 is for left
     }
     
     @IBAction func right(sender: AnyObject) {
-        print("pressed right")
+        debugPrint("pressed right")
         setSpeed()
-        share.remoteControl.setSpeedDirection(speed, direction: 100)
+        shared.remoteControl.setSpeedDirection(speed, direction: 100)   //100 is for right
     }
     
     @IBAction func down(sender: AnyObject) {
-        print("pressed down")
-        speed = 201
-        share.remoteControl.setSpeedDirection(speed, direction: 50)
+        debugPrint("pressed down")
+        //check if stop was pressed
+        if (run){
+            speed = 200
+            shared.remoteControl.setSpeedDirection(speed, direction: 50) //50 is for straight (even back)
+        }
     }
     
+    //checks if stop was pressed
     func setSpeed(){
         if run {
             speed = 100
@@ -84,7 +88,5 @@ class ManualControlController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 

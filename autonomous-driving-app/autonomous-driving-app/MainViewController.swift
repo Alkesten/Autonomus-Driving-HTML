@@ -16,31 +16,32 @@ class MainViewController: UIViewController {
     let shared = ShareData.sharedInstance
     
     @IBAction func enter(sender: AnyObject) {
-        print("pressed enter")
+        debugPrint("pressed enter")
         var ipv4 = ""
         
+        //gets String from texfield
         if let ip = IPAddress.text {
             ipv4 = ip
         } else {
-            print("Ip Address is nil")
+            //no value entered
+            debugPrint("Ip Address is nil")
             warningLabel.text = "PLEASE USE FORMAT 123.45.67.89"
         }
         
+        //a valid IP Address Regex pattern to compare
         let validIpAddressRegex = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
         
+        //checks if the entered IP is valid
         if (ipv4.rangeOfString(validIpAddressRegex, options: .RegularExpressionSearch) != nil){
-            print("\(ipv4) is a valid IP address")
+            debugPrint("\(ipv4) is a valid IP address")
             
-            ShareData.sharedInstance.car = Car.init(ipv4: ipv4)
-            shared.dataSocket = DataSocket(car: shared.car, localPort: shared.dataPort)
-            shared.videoSocket = VideoSocket(car: shared.car, localPort: shared.videoPort)
+            //creats the car, sockets and remotecontrol in the shared instance accessable for every class.
+            ShareData.sharedInstance.ini(ipv4, carPort: 3030, dataPort: 3040, videoPort: 3050)
             
-            shared.dataSocket.handshake(shared.videoPort, dataPort: shared.dataPort)
-            shared.remoteControl = RemoteControl(dataSocket: shared.dataSocket, car: shared.car)
-            
-            self.performSegueWithIdentifier("nextScreen", sender: self)
+            self.performSegueWithIdentifier("nextScreen", sender: self) //go to next screen
         } else {
-            print("Ip Address \(ipv4) is not valid.")
+            //requests a valid IP if the entered wasn't valid.
+            debugPrint("Ip Address \(ipv4) is not valid.")
             warningLabel.text = "PLEASE USE FORMAT 123.45.67.89"
         }
     }
@@ -54,7 +55,6 @@ class MainViewController: UIViewController {
         IPAddress.textRectForBounds(CGRectInset(IPAddress.bounds, 0, 0))
         IPAddress.editingRectForBounds(CGRectInset(IPAddress.bounds, 0, 0))
         warningLabel.text = ""
-        
     }
     
     override func didReceiveMemoryWarning() {

@@ -26,7 +26,19 @@ class ShareData {
     var remoteControl: RemoteControl!
     var dataSocket: DataSocket!
     var videoSocket: VideoSocket!
-    let carPort: UInt16 = 3030
-    let dataPort: UInt16 = 3040
-    let videoPort: UInt16 = 3050
+    
+    /*
+    creates the car, datasocket, videosocket, remotecontrol and sends the handshake
+    Must called once only!
+    */
+    func ini(ipv4: String, carPort: UInt16, dataPort: UInt16, videoPort: UInt16) -> Bool{
+        self.car = Car.init(ipv4: ipv4, port: carPort)
+        self.dataSocket = DataSocket(localPort: dataPort)
+        self.videoSocket = VideoSocket(localPort: videoPort)
+        
+        self.dataSocket.handshake(self.videoSocket.localPort, dataPort: self.dataSocket.localPort)
+        self.remoteControl = RemoteControl()
+        
+        return true
+    }
 }
