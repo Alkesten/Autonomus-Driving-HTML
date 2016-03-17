@@ -32,16 +32,19 @@ class OutputController: UIViewController {
     @IBOutlet weak var yGyroscope: UILabel!
     @IBOutlet weak var zGyroscope: UILabel!
     
+    var timer: NSTimer?
     let shared = ShareData.sharedInstance
     
     @IBAction func request(sender: AnyObject) {
         debugPrint("pressed request")
         shared.remoteControl.requestData(true, gyroscope: true, distance: true, video: false) //request all data except video
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("updateValues"), userInfo: nil, repeats: true)
     }
     
     @IBAction func stop(sender: AnyObject) {
         debugPrint("pressed stop")
         shared.remoteControl.setStop() //sends stop signal, still receive data for output
+        timer?.invalidate()
     }
     
     func setup() {
@@ -53,8 +56,6 @@ class OutputController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        let timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("updateValues"), userInfo: nil, repeats: true)
-        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
     }
     
     override func didReceiveMemoryWarning() {
@@ -86,6 +87,5 @@ class OutputController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        updateValues()
     }
 }
