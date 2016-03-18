@@ -220,7 +220,6 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="down:" destination="9pv-A4-QxB" eventType="touchUpInside" id="IOb-Ki-cCr"/>
-                                                    <action selector="up:" destination="9pv-A4-QxB" eventType="touchUpInside" id="bdP-LQ-MWi"/>
                                                 </connections>
                                             </button>
                                         </subviews>
