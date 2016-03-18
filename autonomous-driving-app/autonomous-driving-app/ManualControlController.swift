@@ -58,6 +58,9 @@ class ManualControlController: UIViewController {
         if (run){
             speed = 200
             shared.remoteControl.setSpeedDirection(speed, direction: 50) //50 is for straight (even back)
+        } else {
+            setSpeed() //sets speed to 0 if stop was pressed
+            shared.remoteControl.setSpeedDirection(speed, direction: 50)
         }
     }
     

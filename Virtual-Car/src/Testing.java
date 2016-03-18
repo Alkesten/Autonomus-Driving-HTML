@@ -15,8 +15,9 @@ public class Testing {
 		byte[] speed = new byte[] {0x64,0x64,0x64,0x64};
 		byte[] xyz = new byte[] {0x01,0x02,0x03};
 		
-		int appPort = 33333;
-		int carPort = 33334;
+		int appPort = 3040;
+		int videoPort = 3050;
+		int carPort = 3030;
 		
 		byte[] appIPv4RAW = new byte[] {127,0,0,1}; //Address of the VM
 		InetAddress appIPv4;
